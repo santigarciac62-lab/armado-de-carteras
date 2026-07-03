@@ -1,11 +1,9 @@
 import { NextResponse } from "next/server";
 import { getCotizaciones, PRICE_PROVIDER_ACTIVO } from "@/lib/prices";
 
-// Requerido por `output: export` (GitHub Pages): esta ruta se resuelve una
-// vez en build time y se sirve como archivo estático, no por request. En un
-// backend real (Vercel) conviene volver a "force-dynamic" para refrescar
-// precios en cada request.
-export const dynamic = "force-static";
+// Se resuelve en cada request (hay servidor real en Vercel), así los precios
+// se refrescan de verdad y no quedan pegados al momento del build.
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   const cotizaciones = await getCotizaciones();

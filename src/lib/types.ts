@@ -51,3 +51,74 @@ export interface LineaCartera {
   ticker: string;
   pct: number; // 0-100
 }
+
+export type StatusDesvio = "optimo" | "aceptable" | "revisar";
+
+/** Fila tal como viene de la hoja "Total" del Excel de seguimiento, una por comitente. */
+export interface ClienteRaw {
+  numero: number;
+  denominacion: string;
+  oficial: string;
+  referente: string;
+  manejo: string;
+  aranceles: string;
+  testInversor: string;
+  tieneTenencia: boolean;
+  fees2025: number | null;
+  feesQ1_2026: number | null;
+  feesQ2_2026: number | null;
+  feesQ3_2026: number | null;
+  feesQ4_2026: number | null;
+  fees2026: number | null;
+  /** % (0-1) por cada una de las 12 categorías de instrumento del Excel. */
+  categorias: Record<string, number>;
+  aumArs: number;
+  aumPromUsd: number;
+}
+
+export interface AlertaConcentracion {
+  categoria: string;
+  pctCliente: number;
+  limite: number;
+}
+
+export interface RecomendacionRebalanceo {
+  bucket: Bucket;
+  actualPct: number;
+  modeloPct: number;
+  desvioPP: number;
+  accion: "vender" | "comprar";
+  tickersSugeridos: string[];
+}
+
+export interface ClienteEnriquecido extends ClienteRaw {
+  perfilGrupo: Perfil;
+  /** true si no tenía Test del Inversor cargado y se le asignó un perfil por defecto. */
+  perfilAsignadoPorDefault: boolean;
+  bucketsCliente: Record<Bucket, number>;
+  monedaComparacion: Moneda;
+  desvio: number; // 0-1, tracking error normalizado vs. la cartera de su perfil
+  statusSemaforo: StatusDesvio;
+  aumUsd: number;
+  alertasConcentracion: AlertaConcentracion[];
+  recomendaciones: RecomendacionRebalanceo[];
+}
+
+export interface OficialResumen {
+  oficial: string;
+  cuentas: number;
+  conTenencia: number;
+  pctTenencia: number;
+  aumUsd: number;
+  pctAum: number;
+  fees2025: number;
+  feesQ1Q2: number;
+}
+
+export interface RevenueOficial {
+  oficial: string;
+  q1Usd: number;
+  q2Usd: number;
+  totalUsd: number;
+  varQ2VsQ1: number | string;
+}
