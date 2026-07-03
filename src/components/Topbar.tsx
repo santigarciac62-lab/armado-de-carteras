@@ -3,8 +3,8 @@ import { FECHA_VISION_VIGENTE } from "@/data/modelPortfolios";
 
 const NAV_ITEMS = [
   { href: "/", label: "Armado de carteras", disabled: false },
-  { href: "/desvios", label: "Cuentas con desvío", disabled: true },
-  { href: "/oficiales", label: "Seguimiento de oficiales", disabled: true },
+  { href: "/desvios", label: "Cuentas con desvío", disabled: false },
+  { href: "/oficiales", label: "Seguimiento de oficiales", disabled: false },
 ];
 
 function formateaFecha(iso: string) {
