@@ -88,7 +88,7 @@ export function ArmadoWorkspace({
   useEffect(() => {
     const intervalo = setInterval(async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/api/prices`);
+        const res = await fetch("/api/prices");
         if (!res.ok) return;
         const data = await res.json();
         setCotizaciones(data.cotizaciones);
