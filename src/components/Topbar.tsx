@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { FECHA_VISION_VIGENTE } from "@/data/modelPortfolios";
+import { COOKIE_NAME, verificarSesion } from "@/lib/auth";
 
 const NAV_ITEMS = [
   { href: "/", label: "Armado de carteras", disabled: false },
@@ -15,7 +17,10 @@ function formateaFecha(iso: string) {
   });
 }
 
-export function Topbar({ active }: { active: string }) {
+export async function Topbar({ active }: { active: string }) {
+  const cookieStore = await cookies();
+  const sesion = await verificarSesion(cookieStore.get(COOKIE_NAME)?.value);
+
   return (
     <>
       <header style={{ background: "var(--navy)" }} className="text-white">
@@ -29,10 +34,20 @@ export function Topbar({ active }: { active: string }) {
               Armado de Carteras
             </span>
           </div>
-          <div className="flex gap-6 text-[12px] text-white/70">
+          <div className="flex items-center gap-6 text-[12px] text-white/70">
             <div>
               Visión vigente · <strong className="text-white font-medium">{formateaFecha(FECHA_VISION_VIGENTE)}</strong>
             </div>
+            {sesion && (
+              <div className="flex items-center gap-2">
+                <span>{sesion.usuario}</span>
+                <form method="POST" action="/api/logout">
+                  <button type="submit" className="text-white/70 hover:text-white underline underline-offset-2">
+                    Cerrar sesión
+                  </button>
+                </form>
+              </div>
+            )}
           </div>
         </div>
       </header>

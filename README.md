@@ -3,12 +3,36 @@
 Herramienta interna del equipo de asesoramiento para reemplazar el flujo manual de
 Visión de Portafolio + Excel de seguimiento. Next.js + TypeScript.
 
+Se despliega en Vercel (con servidor real) — es el único despliegue: no hay
+export estático ni GitHub Pages, justamente porque la app protege con login
+el acceso a datos reales de clientes y eso requiere backend.
+
 ## Desarrollo
 
 ```bash
 npm install
+cp .env.example .env.local   # completar AUTH_SECRET y AUTH_USERS, ver abajo
 npm run dev
 ```
+
+## Autenticación
+
+Login simple pensado para un equipo interno chico, sin altas de usuario desde
+la UI ni recuperación de contraseña:
+
+- `AUTH_USERS`: variable de entorno con `usuario1:clave1,usuario2:clave2`. Se
+  edita a mano en Vercel (Project Settings → Environment Variables) para dar
+  de alta/baja gente o cambiar una clave — no requiere redeploy de código,
+  solo un redeploy del proyecto (Vercel lo hace solo al guardar la variable).
+- `AUTH_SECRET`: clave para firmar la cookie de sesión (`openssl rand -base64 32`).
+  Si se cambia, todas las sesiones activas se invalidan.
+- Todo el sitio queda atrás del login (`src/middleware.ts`), incluida la
+  pantalla de armado — no solo las que muestran datos reales de clientes.
+- Sesión: cookie HttpOnly firmada con HMAC-SHA256, expira a los 7 días.
+
+**Importante:** sin `AUTH_SECRET`/`AUTH_USERS` configuradas, nadie puede
+loguearse (ni siquiera en local) — es intencional, para que no se pueda
+levantar el sitio por accidente sin login activo.
 
 ## Estructura
 
@@ -17,6 +41,11 @@ npm run dev
   exista una pantalla de administración para cargarlas.
 - `src/data/instrumentos.ts` — universo de instrumentos recomendados, derivado de
   las carteras modelo + metadata (clase de activo, moneda, nombre).
+- `src/data/raw/*.json` — datos reales de clientes/oficiales extraídos una vez del
+  Excel de seguimiento (hojas "Total" y "Dashboard"). Hay que reemplazarlos a mano
+  cuando se actualice el padrón, hasta que exista una carga automática.
+- `src/lib/desvio.ts` — mapeo de categorías del Excel a los buckets de la Visión,
+  asignación de perfil de riesgo, cálculo de desvío/alertas/recomendaciones.
 - `src/lib/prices/` — abstracción de proveedor de precios:
   - `mockProvider.ts`: datos demo determinísticos, sin dependencias de red. Es el
     fallback automático y lo que corre por defecto en desarrollo.
@@ -27,46 +56,10 @@ npm run dev
     confirmar en vivo). No cubre FCI: los fondos comunes no cotizan en mercado, hay
     que sumar una fuente de valor de cuotaparte (ej. CAFCI) aparte.
   - Activar con la variable de entorno `USE_DATA912=true`.
-- `src/lib/armado.ts` — cálculos de la pantalla de armado (montos por línea,
-  agregación por categoría, desvío vs. cartera modelo).
+- `src/lib/auth.ts` / `src/middleware.ts` — login y protección de rutas.
 
 ## Pantallas
 
 1. **Armado dinámico de carteras** (`/`) — implementada.
-2. **Cuentas con desvío** (`/desvios`) — pendiente.
-3. **Seguimiento de oficiales** (`/oficiales`) — pendiente.
-
-## Demo pública en GitHub Pages
-
-`.github/workflows/deploy-pages.yml` publica automáticamente un **export estático**
-del sitio en GitHub Pages en cada push a `main` (o manualmente desde la pestaña
-Actions → "Deploy static export to GitHub Pages" → Run workflow).
-
-Para que el primer deploy funcione, en el repo hay que habilitar una vez:
-**Settings → Pages → Build and deployment → Source = "GitHub Actions"**.
-Una vez configurado, queda así para siempre; no hace falta tocarlo de nuevo.
-
-URL resultante: `https://<usuario-u-org>.github.io/armado-de-carteras/`
-
-### Importante — esto es una demo, no el backend de producción
-
-Un export estático no tiene servidor: no hay API routes dinámicas ni cron jobs.
-Concretamente:
-
-- Los precios que se ven en la demo pública quedan **congelados al momento del
-  último build** (cada push a `main`, o cuando se corra el workflow a mano) — no
-  se actualizan solos. Localmente (`npm run dev`) siguen "moviéndose" cada 30s
-  como siempre, porque ahí sí hay servidor.
-- Si en el futuro conectamos la Visión/Excel a una base de datos real y a un
-  proveedor de precios en vivo (el plan original: Vercel + Postgres + cron), ese
-  despliegue va a necesitar volver a un build dinámico (`npm run build` normal,
-  sin `STATIC_EXPORT=true`) — el export a Pages queda como una vidriera pública
-  liviana, no reemplaza esa arquitectura.
-
-### Comandos
-
-```bash
-# Export estático local, igual al que corre el workflow
-STATIC_EXPORT=true NEXT_PUBLIC_BASE_PATH=/armado-de-carteras npm run build
-npx serve out   # o cualquier servidor estático, para probarlo localmente
-```
+2. **Cuentas con desvío** (`/desvios`) — implementada.
+3. **Seguimiento de oficiales** (`/oficiales`) — implementada.
