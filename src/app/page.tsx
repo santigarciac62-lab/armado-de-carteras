@@ -4,8 +4,12 @@ import { CARTERAS_MODELO } from "@/data/modelPortfolios";
 import { UNIVERSO_INSTRUMENTOS } from "@/data/instrumentos";
 import { getCotizaciones, PRICE_PROVIDER_ACTIVO } from "@/lib/prices";
 
-// Los precios deben resolverse en cada request, no congelarse en el build.
-export const dynamic = "force-dynamic";
+// Nota: esta página se sirve también como export estático para GitHub Pages
+// (ver .github/workflows/deploy-pages.yml), lo que exige que sea 100%
+// estática en build time — por eso no se fuerza render dinámico acá. En un
+// despliegue con backend real (Vercel), agregar `export const revalidate`
+// o `export const dynamic = "force-dynamic"` para que los precios se
+// refresquen por request en vez de quedar fijos al momento del build.
 
 export default async function Home() {
   const cotizacionesIniciales = await getCotizaciones();
