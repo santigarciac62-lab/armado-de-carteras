@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+:root {
+  --navy: #0b1f3f;
+  --navy-light: #14325a;
+  --teal: #1b8e9c;
+  --teal-soft: #e7f5f7;
+  --gold: #c99c2e;
+  --gold-soft: #fcf6e5;
+  --slate: #5b7a99;
+  --slate-light: #8fb5d1;
+  --bg: #f5f7fa;
+  --card: #ffffff;
+  --border: #e2e6ec;
+  --border-strong: #c9d0da;
+  --text: #0f172a;
+  --text-soft: #5b6678;
+  --text-mute: #8a95a7;
+  --green: #047857;
+  --green-bg: #ecfdf5;
+  --amber: #b45309;
+  --amber-bg: #fef3c7;
+  --red: #b91c1c;
+  --red-bg: #fee2e2;
+
+  --background: var(--bg);
+  --foreground: var(--text);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-plex-sans);
+  --font-mono: var(--font-plex-mono);
+  --font-serif: var(--font-plex-serif);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-plex-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+
+.font-serif-brand {
+  font-family: var(--font-plex-serif), serif;
+}
+
+.font-mono-brand {
+  font-family: var(--font-plex-mono), monospace;
+  font-feature-settings: "tnum";
+}
+
+/* Bucket / categoría colores (consistentes en toda la app) */
+.bk-FCI {
+  color: var(--navy);
+}
+.bk-Soberanos {
+  color: var(--teal);
+}
+.bk-ON {
+  color: var(--gold);
+}
+.bk-Acciones {
+  color: var(--slate);
+}
+.bk-Cedears {
+  color: var(--slate-light);
+}
+.bk-Otros {
+  color: var(--text-mute);
+}
+
+.bb-FCI {
+  background: var(--navy);
+}
+.bb-Soberanos {
+  background: var(--teal);
+}
+.bb-ON {
+  background: var(--gold);
+}
+.bb-Acciones {
+  background: var(--slate);
+}
+.bb-Cedears {
+  background: var(--slate-light);
+}
+.bb-Otros {
+  background: var(--text-mute);
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.pill-green {
+  background: var(--green-bg);
+  color: var(--green);
+}
+.pill-amber {
+  background: var(--amber-bg);
+  color: var(--amber);
+}
+.pill-red {
+  background: var(--red-bg);
+  color: var(--red);
+}
+.pill-mute {
+  background: #f1f4f8;
+  color: var(--text-mute);
+}
+
+::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 4px;
+}
