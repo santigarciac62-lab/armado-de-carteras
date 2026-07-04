@@ -69,6 +69,26 @@ levantar el sitio por accidente sin login activo.
   Es una aproximación simplificada (bullet + cupón a tasa fija constante);
   no reproduce amortizaciones parciales reales ni la variación futura de
   tasas flotantes/CER — el disclaimer se repite en la propia pantalla.
+- `src/lib/macro/` — Dashboard Financiero (`/dashboard-macro`): un conector
+  por fuente (DolarApi, CriptoYa/ArgentinaDatos, Stooq, FRED, BCRA,
+  datos.gob.ar, Presupuesto Abierto), cada uno con fallback automático al
+  valor semilla (`src/data/raw/macroSeed.ts`) si la fuente falla o no está
+  configurada. Ningún endpoint se pudo verificar en vivo desde el entorno de
+  desarrollo (red restringida) — antes de confiar en producción, revisar:
+  - **Alta confianza** (debería andar tal cual): dólares, riesgo país,
+    índices, commodities (menos soja), tasas EEUU (requiere `FRED_API_KEY`,
+    gratis en https://fred.stlouisfed.org/docs/api/api_key.html).
+  - **Media/baja confianza** ("a verificar" en la propia pantalla): BCRA
+    (matchea por texto de la descripción, no por ID — revisar
+    `src/lib/macro/providers/bcra.ts` si el texto real difiere), inflación
+    y actividad (necesitan los IDs de series de datos.gob.ar por variable
+    de entorno — buscarlos en https://datos.gob.ar/series/api/series/ y
+    completar `DATOS_GOB_AR_*_ID` en `.env.example`), y resultado fiscal
+    (sin implementar: no se confirmó el endpoint exacto de Presupuesto
+    Abierto, queda en el valor semilla).
+  - **Carga manual, sin API gratuita real**: futuros de dólar ROFEX,
+    Índice de Confianza en el Gobierno (UTDT) y vencimientos USD 2026 —
+    hay que actualizar `macroSeed.ts` a mano.
 
 ## Pantallas
 
@@ -76,3 +96,4 @@ levantar el sitio por accidente sin login activo.
 2. **Renta Fija** (`/renta-fija`) — implementada.
 3. **Cuentas con desvío** (`/desvios`) — implementada.
 4. **Seguimiento de oficiales** (`/oficiales`) — implementada.
+5. **Dashboard Financiero** (`/dashboard-macro`) — implementada.
