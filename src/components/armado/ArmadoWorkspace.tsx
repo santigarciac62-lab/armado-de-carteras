@@ -6,9 +6,11 @@ import {
   agregarPorCategoria,
   calcularLineas,
   desvioPorCategoria,
+  desvioTotal,
   lineasDesdeModelo,
   sumaPct,
 } from "@/lib/armado";
+import { statusDesvio } from "@/lib/bucket";
 import { getCarteraModelo } from "@/data/modelPortfolios";
 import { colorDeCategoria } from "@/lib/colors";
 import { TC_REFERENCIA } from "@/lib/constants";
@@ -130,6 +132,11 @@ export function ArmadoWorkspace({
     [lineasCalculadas, carteraCargada]
   );
 
+  const desvio = useMemo(
+    () => (carteraCargada ? desvioTotal(lineasCalculadas, carteraCargada) : null),
+    [lineasCalculadas, carteraCargada]
+  );
+
   const seleccionados = useMemo(() => new Set(lineas.map((l) => l.ticker)), [lineas]);
 
   const cargarModelo = useCallback(
@@ -232,7 +239,7 @@ export function ArmadoWorkspace({
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 mb-6">
         {[
           { label: "Monto total armado", value: `${monedaCartera === "USD" ? "USD " : "$"}${Math.round(montoEnCartera).toLocaleString("es-AR")}` },
           { label: "Instrumentos seleccionados", value: String(lineas.length) },
@@ -246,12 +253,28 @@ export function ArmadoWorkspace({
             value: proveedor === "data912" ? "Data912" : "Demo",
             sub: `Actualizado ${new Date(ultimaActualizacion).toLocaleTimeString("es-AR")}`,
           },
+          {
+            label: "Desvío vs. perfil",
+            value: desvio === null ? "—" : `${(desvio * 100).toFixed(0)}%`,
+            sub: carteraCargada ? `vs. ${carteraCargada.perfilLabel} ${carteraCargada.moneda}` : "Elegí un perfil de partida",
+            color:
+              desvio === null
+                ? "var(--navy)"
+                : statusDesvio(desvio) === "optimo"
+                  ? "var(--green)"
+                  : statusDesvio(desvio) === "aceptable"
+                    ? "var(--amber)"
+                    : "var(--red)",
+          },
         ].map((k) => (
           <div key={k.label} className="rounded-lg p-3 sm:p-4" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
             <div className="text-[10px] sm:text-[11px] uppercase tracking-wide font-medium" style={{ color: "var(--text-mute)" }}>
               {k.label}
             </div>
-            <div className="font-mono-brand text-[16px] sm:text-[24px] font-semibold mt-1.5 break-words leading-tight" style={{ color: "var(--navy)" }}>
+            <div
+              className="font-mono-brand text-[16px] sm:text-[24px] font-semibold mt-1.5 break-words leading-tight"
+              style={{ color: k.color ?? "var(--navy)" }}
+            >
               {k.value}
             </div>
             {k.sub && (
