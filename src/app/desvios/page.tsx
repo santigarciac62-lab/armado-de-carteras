@@ -11,21 +11,21 @@ export default function Desvios() {
     <div className="flex-1" style={{ background: "var(--bg)" }}>
       <Topbar active="/desvios" />
 
-      <div className="max-w-[1400px] mx-auto px-8 pt-10 pb-4">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-8 pt-6 sm:pt-10 pb-4">
         <h1
-          className="font-serif-brand font-medium text-[32px] leading-tight mb-2.5 tracking-tight"
+          className="font-serif-brand font-medium text-[24px] sm:text-[32px] leading-tight mb-2.5 tracking-tight"
           style={{ color: "var(--navy)" }}
         >
           Cuentas con desvío
         </h1>
-        <p className="text-[15px] max-w-[760px]" style={{ color: "var(--text-soft)" }}>
+        <p className="text-[14px] sm:text-[15px] max-w-[760px]" style={{ color: "var(--text-soft)" }}>
           Comparación de la cartera real de cada cliente contra la cartera modelo de su perfil de riesgo,
           con el cambio recomendado según la Visión de Portafolio vigente.
         </p>
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-8 pb-16">
-        <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-8 pb-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
           {[
             { label: "Cuentas con tenencia", value: total.toLocaleString("es-AR") },
             {
@@ -44,15 +44,15 @@ export default function Desvios() {
               sub: `de USD ${Math.round(aumTotal).toLocaleString("es-AR")} total`,
             },
           ].map((k) => (
-            <div key={k.label} className="rounded-lg p-4" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
-              <div className="text-[11px] uppercase tracking-wide font-medium" style={{ color: "var(--text-mute)" }}>
+            <div key={k.label} className="rounded-lg p-3 sm:p-4" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
+              <div className="text-[10px] sm:text-[11px] uppercase tracking-wide font-medium" style={{ color: "var(--text-mute)" }}>
                 {k.label}
               </div>
-              <div className="font-mono-brand text-[24px] font-semibold mt-1.5" style={{ color: "var(--navy)" }}>
+              <div className="font-mono-brand text-[16px] sm:text-[24px] font-semibold mt-1.5 break-words leading-tight" style={{ color: "var(--navy)" }}>
                 {k.value}
               </div>
               {k.sub && (
-                <div className="text-[12px] mt-1" style={{ color: "var(--text-soft)" }}>
+                <div className="text-[11px] sm:text-[12px] mt-1" style={{ color: "var(--text-soft)" }}>
                   {k.sub}
                 </div>
               )}

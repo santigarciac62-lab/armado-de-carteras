@@ -12,7 +12,7 @@ const BUCKET_LABEL: Record<string, string> = {
 
 export function DetalleCliente({ cliente }: { cliente: ClienteEnriquecido }) {
   return (
-    <div className="grid gap-6 p-5" style={{ gridTemplateColumns: "1.1fr 1fr", background: "#FAFBFC" }}>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 sm:p-5" style={{ background: "#FAFBFC" }}>
       <div>
         <h4 className="text-[12px] font-medium uppercase tracking-wide mb-3" style={{ color: "var(--text-mute)" }}>
           Composición actual vs. cartera modelo
@@ -71,7 +71,7 @@ export function DetalleCliente({ cliente }: { cliente: ClienteEnriquecido }) {
             </h4>
             <ul className="flex flex-col gap-1.5">
               {cliente.alertasConcentracion.map((a) => (
-                <li key={a.categoria} className="text-[13px] flex items-center gap-2">
+                <li key={a.categoria} className="text-[13px] flex flex-wrap items-center gap-1.5">
                   <span className="pill" style={{ background: "var(--amber-bg)", color: "var(--amber)" }}>
                     {(a.pctCliente * 100).toFixed(0)}%
                   </span>

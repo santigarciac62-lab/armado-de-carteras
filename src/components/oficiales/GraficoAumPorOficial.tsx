@@ -11,12 +11,12 @@ export function GraficoAumPorOficial({ oficiales }: { oficiales: OficialEnriquec
     .map((o) => ({ oficial: o.oficial.split(",")[0], aumUsd: Math.round(o.aumUsd) }));
 
   return (
-    <div className="rounded-[10px] p-5" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
-      <h3 className="font-serif-brand text-[16px] font-medium mb-4" style={{ color: "var(--navy)" }}>
+    <div className="rounded-[10px] p-4 sm:p-5" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
+      <h3 className="font-serif-brand text-[15px] sm:text-[16px] font-medium mb-4" style={{ color: "var(--navy)" }}>
         AUM por oficial (USD)
       </h3>
       <ResponsiveContainer width="100%" height={280}>
-        <BarChart data={data} layout="vertical" margin={{ left: 10, right: 24 }}>
+        <BarChart data={data} layout="vertical" margin={{ left: 0, right: 16 }}>
           <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#F1F4F8" />
           <XAxis
             type="number"
@@ -26,8 +26,8 @@ export function GraficoAumPorOficial({ oficiales }: { oficiales: OficialEnriquec
           <YAxis
             type="category"
             dataKey="oficial"
-            width={110}
-            tick={{ fontSize: 12, fill: "var(--text)" }}
+            width={90}
+            tick={{ fontSize: 11, fill: "var(--text)" }}
           />
           <Tooltip
             formatter={(value) => [`USD ${Number(value).toLocaleString("es-AR")}`, "AUM"]}

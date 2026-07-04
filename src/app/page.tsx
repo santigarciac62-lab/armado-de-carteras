@@ -15,14 +15,14 @@ export default async function Home() {
     <div className="flex-1" style={{ background: "var(--bg)" }}>
       <Topbar active="/" />
 
-      <div className="max-w-[1400px] mx-auto px-8 pt-10 pb-4">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-8 pt-6 sm:pt-10 pb-4">
         <h1
-          className="font-serif-brand font-medium text-[32px] leading-tight mb-2.5 tracking-tight"
+          className="font-serif-brand font-medium text-[24px] sm:text-[32px] leading-tight mb-2.5 tracking-tight"
           style={{ color: "var(--navy)" }}
         >
           Armado dinámico de carteras
         </h1>
-        <p className="text-[15px] max-w-[760px]" style={{ color: "var(--text-soft)" }}>
+        <p className="text-[14px] sm:text-[15px] max-w-[760px]" style={{ color: "var(--text-soft)" }}>
           Combiná los instrumentos recomendados en la Visión de Portafolio vigente para armar una cartera
           a medida: elegí un perfil como punto de partida, ajustá ponderaciones y vas viendo el monto, el
           precio y la variación de cada instrumento en tiempo real.

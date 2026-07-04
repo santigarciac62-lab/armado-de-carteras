@@ -7,9 +7,9 @@ export default async function LoginPage({
   const next = params.next ?? "/";
 
   return (
-    <div className="flex-1 flex items-center justify-center" style={{ background: "var(--bg)" }}>
+    <div className="flex-1 flex items-center justify-center px-4 py-10" style={{ background: "var(--bg)" }}>
       <div
-        className="w-full max-w-[380px] rounded-[10px] p-8"
+        className="w-full max-w-[380px] rounded-[10px] p-6 sm:p-8"
         style={{ background: "var(--card)", border: "1px solid var(--border)" }}
       >
         <div className="flex items-baseline gap-2 mb-1">
@@ -32,7 +32,7 @@ export default async function LoginPage({
               type="text"
               required
               autoFocus
-              className="w-full text-[14px] px-3 py-2.5 rounded-md"
+              className="w-full text-base px-3 py-3 rounded-md"
               style={{ border: "1px solid var(--border-strong)" }}
             />
           </div>
@@ -44,7 +44,7 @@ export default async function LoginPage({
               name="contrasena"
               type="password"
               required
-              className="w-full text-[14px] px-3 py-2.5 rounded-md"
+              className="w-full text-base px-3 py-3 rounded-md"
               style={{ border: "1px solid var(--border-strong)" }}
             />
           </div>
@@ -57,7 +57,7 @@ export default async function LoginPage({
 
           <button
             type="submit"
-            className="text-[14px] font-medium px-4 py-2.5 rounded-md mt-2"
+            className="text-base font-medium px-4 py-3 rounded-md mt-2"
             style={{ background: "var(--navy)", color: "#fff" }}
           >
             Ingresar
