@@ -1,6 +1,7 @@
 import { CARTERAS_MODELO } from "@/data/modelPortfolios";
 import { UNIVERSO_INSTRUMENTOS } from "@/data/instrumentos";
 import { TC_REFERENCIA } from "@/lib/constants";
+import { BUCKETS, statusDesvio, trackingError } from "@/lib/bucket";
 import {
   AlertaConcentracion,
   Bucket,
@@ -52,8 +53,6 @@ const CATEGORIA_EXCEL_A_LIMITE: Record<string, string> = {
   "Tít. Púb. Int.": "Titulos Públicos Internacionales",
 };
 
-const BUCKETS: Bucket[] = ["FCI", "Soberanos", "ON", "Acciones", "Cedears", "Otros"];
-
 const UMBRAL_RECOMENDACION_PP = 5; // por debajo de esto no vale la pena sugerir un rebalanceo
 
 function agregarBuckets(categorias: Record<string, number>): Record<Bucket, number> {
@@ -63,20 +62,6 @@ function agregarBuckets(categorias: Record<string, number>): Record<Bucket, numb
     if (bucket) acc[bucket] += pct;
   }
   return acc;
-}
-
-function trackingError(actual: Record<Bucket, number>, modelo: Record<Bucket, number>): number {
-  let suma = 0;
-  for (const b of BUCKETS) {
-    suma += Math.abs((actual[b] ?? 0) - (modelo[b] ?? 0));
-  }
-  return suma / 2;
-}
-
-function statusDesde(desvio: number): ClienteEnriquecido["statusSemaforo"] {
-  if (desvio < 0.15) return "optimo";
-  if (desvio < 0.3) return "aceptable";
-  return "revisar";
 }
 
 function calcularAlertasConcentracion(
@@ -151,7 +136,7 @@ export function enriquecerCliente(
     bucketsCliente,
     monedaComparacion: mejor.moneda,
     desvio: mejor.desvio,
-    statusSemaforo: statusDesde(mejor.desvio),
+    statusSemaforo: statusDesvio(mejor.desvio),
     aumUsd: raw.aumArs / TC_REFERENCIA,
     alertasConcentracion: calcularAlertasConcentracion(raw.categorias, limitesConcentracion),
     recomendaciones: calcularRecomendaciones(bucketsCliente, mejor.modelo.id, mejor.modelo.buckets),

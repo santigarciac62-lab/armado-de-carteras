@@ -1,6 +1,7 @@
 import { Bucket, Cotizacion, LineaCartera } from "@/lib/types";
 import { UNIVERSO_INSTRUMENTOS } from "@/data/instrumentos";
 import { CarteraModelo } from "@/lib/types";
+import { trackingError } from "@/lib/bucket";
 
 export interface LineaCalculada extends LineaCartera {
   categoria: string;
@@ -45,6 +46,18 @@ export function sumaPct(lineas: LineaCartera[]): number {
 /** Líneas de la cartera modelo, expresadas en formato editable (pct en base 100). */
 export function lineasDesdeModelo(cartera: CarteraModelo): LineaCartera[] {
   return cartera.activos.map((a) => ({ ticker: a.ticker, pct: Math.round(a.pct * 10000) / 100 }));
+}
+
+/** Desvío total (0-1) de la cartera en armado contra el perfil de partida elegido,
+ * agregado por bucket — mismo criterio y semáforo que "Cuentas con desvío", para que
+ * el asesor vea de entrada si lo que está armando se sigue pareciendo al perfil del
+ * cliente o ya se corrió hacia otro (ej. armar una agresiva partiendo de conservador). */
+export function desvioTotal(lineas: LineaCalculada[], modelo: CarteraModelo): number {
+  const actualPorBucket: Record<Bucket, number> = { FCI: 0, Soberanos: 0, ON: 0, Acciones: 0, Cedears: 0, Otros: 0 };
+  for (const l of lineas) {
+    actualPorBucket[l.bucket] += l.pct / 100;
+  }
+  return trackingError(actualPorBucket, modelo.buckets);
 }
 
 /** Desvío simple por categoría entre la cartera en armado y la cartera modelo elegida (en pp). */
