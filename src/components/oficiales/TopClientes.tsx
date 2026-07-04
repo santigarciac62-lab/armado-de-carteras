@@ -11,7 +11,8 @@ export function TopClientes({ clientes, top = 20 }: { clientes: ClienteEnriqueci
           Top {top} clientes por AUM
         </h3>
       </div>
-      <table className="w-full" style={{ borderCollapse: "collapse" }}>
+      <div className="overflow-x-auto">
+      <table className="w-full" style={{ borderCollapse: "collapse", minWidth: 560 }}>
         <thead>
           <tr>
             {["#", "Cliente", "Oficial", "AUM (USD)", "% AUM", "Desvío"].map((h, i) => (
@@ -61,6 +62,7 @@ export function TopClientes({ clientes, top = 20 }: { clientes: ClienteEnriqueci
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }

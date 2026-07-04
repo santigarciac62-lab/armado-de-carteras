@@ -45,7 +45,7 @@ export function CatalogoInstrumentos({
           placeholder="Buscar ticker o nombre…"
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
-          className="w-full text-[13px] px-3 py-2 rounded-md mb-2.5"
+          className="w-full text-base sm:text-[13px] px-3 py-2.5 sm:py-2 rounded-md mb-2.5"
           style={{ border: "1px solid var(--border-strong)", background: "var(--card)" }}
         />
         <div className="flex gap-1.5 flex-wrap">
@@ -53,7 +53,7 @@ export function CatalogoInstrumentos({
             <button
               key={b}
               onClick={() => setBucket(b)}
-              className="text-[11px] px-2.5 py-1 rounded-full font-medium transition-colors"
+              className="text-[11px] px-2.5 py-1.5 rounded-full font-medium transition-colors"
               style={
                 bucket === b
                   ? { background: "var(--navy)", color: "#fff" }
@@ -72,7 +72,7 @@ export function CatalogoInstrumentos({
           return (
             <div
               key={inst.ticker}
-              className="flex items-center gap-3 px-4 py-3"
+              className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3"
               style={{ borderBottom: "1px solid #F1F4F8" }}
             >
               <div className="flex-1 min-w-0">

@@ -179,15 +179,11 @@ export function ArmadoWorkspace({
   }));
 
   return (
-    <div className="max-w-[1400px] mx-auto px-8 pb-16">
+    <div className="max-w-[1400px] mx-auto px-4 sm:px-8 pb-16">
       {/* Control bar */}
       <div
-        className="rounded-[10px] p-5 mb-6 grid gap-5"
-        style={{
-          background: "var(--card)",
-          border: "1px solid var(--border)",
-          gridTemplateColumns: "1fr 1fr 1.2fr",
-        }}
+        className="rounded-[10px] p-4 sm:p-5 mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
+        style={{ background: "var(--card)", border: "1px solid var(--border)" }}
       >
         <div>
           <label className="block text-[11px] uppercase tracking-wide font-medium mb-1.5" style={{ color: "var(--text-mute)" }}>
@@ -212,16 +208,16 @@ export function ArmadoWorkspace({
           <label className="block text-[11px] uppercase tracking-wide font-medium mb-1.5" style={{ color: "var(--text-mute)" }}>
             Monto a invertir
           </label>
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <input
               type="text"
               inputMode="numeric"
               value={montoTexto}
               onChange={(e) => setMontoTexto(e.target.value)}
-              className="flex-1 font-mono-brand text-[15px] px-3 py-2 rounded-md"
+              className="flex-1 min-w-0 font-mono-brand text-base sm:text-[15px] px-3 py-2.5 sm:py-2 rounded-md"
               style={{ border: "1px solid var(--border-strong)" }}
             />
-            <div className="w-[140px]">
+            <div className="w-full sm:w-[140px] shrink-0">
               <SegmentedButtons
                 opciones={[
                   { id: "ARS" as Moneda, label: "ARS" },
@@ -236,7 +232,7 @@ export function ArmadoWorkspace({
       </div>
 
       {/* KPIs */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
         {[
           { label: "Monto total armado", value: `${monedaCartera === "USD" ? "USD " : "$"}${Math.round(montoEnCartera).toLocaleString("es-AR")}` },
           { label: "Instrumentos seleccionados", value: String(lineas.length) },
@@ -251,15 +247,15 @@ export function ArmadoWorkspace({
             sub: `Actualizado ${new Date(ultimaActualizacion).toLocaleTimeString("es-AR")}`,
           },
         ].map((k) => (
-          <div key={k.label} className="rounded-lg p-4" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
-            <div className="text-[11px] uppercase tracking-wide font-medium" style={{ color: "var(--text-mute)" }}>
+          <div key={k.label} className="rounded-lg p-3 sm:p-4" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
+            <div className="text-[10px] sm:text-[11px] uppercase tracking-wide font-medium" style={{ color: "var(--text-mute)" }}>
               {k.label}
             </div>
-            <div className="font-mono-brand text-[24px] font-semibold mt-1.5" style={{ color: "var(--navy)" }}>
+            <div className="font-mono-brand text-[16px] sm:text-[24px] font-semibold mt-1.5 break-words leading-tight" style={{ color: "var(--navy)" }}>
               {k.value}
             </div>
             {k.sub && (
-              <div className="text-[12px] mt-1" style={{ color: "var(--text-soft)" }}>
+              <div className="text-[11px] sm:text-[12px] mt-1" style={{ color: "var(--text-soft)" }}>
                 {k.sub}
               </div>
             )}
@@ -268,7 +264,7 @@ export function ArmadoWorkspace({
       </div>
 
       {/* Main grid */}
-      <div className="grid gap-6" style={{ gridTemplateColumns: "360px 1fr" }}>
+      <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6">
         <CatalogoInstrumentos
           instrumentos={universoInstrumentos}
           cotizaciones={cotizaciones}
@@ -287,10 +283,13 @@ export function ArmadoWorkspace({
             onNormalizar={normalizar}
           />
 
-          <div className="grid gap-6" style={{ gridTemplateColumns: carteraCargada ? "auto 1fr" : "1fr" }}>
-            <div className="rounded-[10px] p-4 flex items-center gap-5" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
+          <div className={`grid grid-cols-1 gap-6 ${carteraCargada ? "md:grid-cols-2" : ""}`}>
+            <div
+              className="rounded-[10px] p-4 flex flex-col sm:flex-row items-center gap-5"
+              style={{ background: "var(--card)", border: "1px solid var(--border)" }}
+            >
               <CategoriaDonut data={donutData} centerLabel="Categorías" centerValue={`${categoriasAgregadas.length}`} />
-              <div className="flex flex-col gap-1.5 text-[12px]">
+              <div className="flex flex-col gap-1.5 text-[12px] w-full">
                 {donutData.map((d) => (
                   <div key={d.categoria} className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: d.color }} />

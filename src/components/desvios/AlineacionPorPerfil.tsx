@@ -10,7 +10,7 @@ export function AlineacionPorPerfil({
   stats: { perfil: string; count: number; avgDesvio: number; optimo: number; aceptable: number; revisar: number }[];
 }) {
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
       {stats.map((s) => {
         const segG = s.count > 0 ? (s.optimo / s.count) * 100 : 0;
         const segA = s.count > 0 ? (s.aceptable / s.count) * 100 : 0;

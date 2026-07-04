@@ -50,7 +50,8 @@ export function CarteraEnArmado({
           desde el universo recomendado.
         </div>
       ) : (
-        <table className="w-full" style={{ borderCollapse: "collapse" }}>
+        <div className="overflow-x-auto">
+        <table className="w-full" style={{ borderCollapse: "collapse", minWidth: 560 }}>
           <thead>
             <tr>
               {["Instrumento", "Precio / Var.", "% Cartera", "Monto", ""].map((h, i) => (
@@ -88,7 +89,7 @@ export function CarteraEnArmado({
                     step={0.5}
                     value={l.pct}
                     onChange={(e) => onCambiarPct(l.ticker, parseFloat(e.target.value) || 0)}
-                    className="w-[68px] text-right font-mono-brand text-[13px] px-2 py-1 rounded-md"
+                    className="w-[64px] sm:w-[68px] text-right font-mono-brand text-[16px] sm:text-[13px] px-2 py-1.5 rounded-md"
                     style={{ border: "1px solid var(--border-strong)" }}
                   />
                   <span className="text-[12px] ml-1" style={{ color: "var(--text-mute)" }}>%</span>
@@ -100,7 +101,7 @@ export function CarteraEnArmado({
                 <td className="px-4 py-2.5 text-right">
                   <button
                     onClick={() => onQuitar(l.ticker)}
-                    className="text-[13px] px-2 py-0.5 rounded"
+                    className="text-[15px] px-2.5 py-2 rounded"
                     style={{ color: "var(--text-mute)" }}
                     aria-label={`Quitar ${l.ticker}`}
                   >
@@ -137,6 +138,7 @@ export function CarteraEnArmado({
             </tr>
           </tfoot>
         </table>
+        </div>
       )}
     </div>
   );

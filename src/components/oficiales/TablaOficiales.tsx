@@ -29,8 +29,8 @@ export function TablaOficiales({ oficiales }: { oficiales: OficialEnriquecido[] 
   ];
 
   return (
-    <div className="rounded-[10px]" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
-      <table className="w-full" style={{ borderCollapse: "collapse" }}>
+    <div className="rounded-[10px] overflow-x-auto" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>
+      <table className="w-full" style={{ borderCollapse: "collapse", minWidth: 720 }}>
         <thead>
           <tr>
             {columnas.map((c) => (
