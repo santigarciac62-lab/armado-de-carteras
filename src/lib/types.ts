@@ -169,3 +169,33 @@ export interface PagoMensual {
   mes: string; // "yyyy-mm"
   porMoneda: Record<Moneda, number>;
 }
+
+export type Actualizacion = "tiempo-real" | "diaria" | "mensual" | "manual";
+export type Confianza = "alta" | "media" | "baja";
+export type FormatoIndicador = "moneda" | "porcentaje" | "numero" | "puntos";
+
+/** Una fila del dashboard macro (ver src/lib/macro/). */
+export interface Indicador {
+  id: string;
+  categoria: string; // agrupa en la misma "caja" que en el dashboard de referencia
+  label: string;
+  valor: number;
+  formato: FormatoIndicador;
+  moneda?: Moneda;
+  /** Variaciones opcionales, cada sección usa las que correspondan (no todas aplican siempre). */
+  var1d?: number | null;
+  var7d?: number | null;
+  var30d?: number | null;
+  varYtd?: number | null;
+  var1y?: number | null;
+  fecha: string; // ISO yyyy-mm-dd del dato
+  fuente: string;
+  actualizacion: Actualizacion;
+  confianza: Confianza;
+  nota?: string;
+}
+
+export interface SeccionMacro {
+  categoria: string;
+  indicadores: Indicador[];
+}
