@@ -23,9 +23,8 @@ export const MACRO_SEED: Indicador[] = [
   { id: "dolar-canje", categoria: "Dólares Financieros", label: "Canje", valor: 3.02, formato: "porcentaje", fecha: "2026-06-30", fuente: "Calculado (CCL vs MEP)", actualizacion: "tiempo-real", confianza: "alta" },
   { id: "dolar-brecha", categoria: "Dólares Financieros", label: "Brecha Oficial vs Mep", valor: 2.59, formato: "porcentaje", fecha: "2026-06-30", fuente: "Calculado (MEP vs Oficial)", actualizacion: "tiempo-real", confianza: "alta" },
   { id: "dolar-blue", categoria: "Dólares Financieros", label: "Dólar Blue", valor: 1515.0, formato: "moneda", moneda: "ARS", fecha: "2026-06-30", fuente: "DolarApi", actualizacion: "tiempo-real", confianza: "alta" },
-  { id: "dolar-tcrm", categoria: "Dólares Financieros", label: "Índice Tipo de cambio real multilateral", valor: 85.65, formato: "numero", fecha: "2026-06-30", fuente: "BCRA (ITCRM)", actualizacion: "diaria", confianza: "media" },
-
   // --- Banco Central ---
+  { id: "dolar-tcrm", categoria: "Banco Central", label: "Índice Tipo de cambio real multilateral (ITCRM)", valor: 85.65, formato: "numero", fecha: "2026-06-30", fuente: "BCRA (ITCRM)", actualizacion: "diaria", confianza: "media" },
   { id: "bcra-base-monetaria", categoria: "Banco Central", label: "Base monetaria", valor: 44451195, formato: "moneda", moneda: "ARS", varYtd: 3.48, fecha: "2026-06-30", fuente: "BCRA", actualizacion: "diaria", confianza: "media", nota: "en millones de ARS" },
   { id: "bcra-m2-privado", categoria: "Banco Central", label: "M2 Privado transaccional", valor: 63030583, formato: "moneda", moneda: "ARS", varYtd: -6.0, fecha: "2026-06-30", fuente: "BCRA", actualizacion: "diaria", confianza: "media", nota: "en millones de ARS" },
   { id: "bcra-reservas-brutas", categoria: "Banco Central", label: "Reservas Brutas", valor: 44873, formato: "moneda", moneda: "USD", fecha: "2026-06-30", fuente: "BCRA", actualizacion: "diaria", confianza: "media", nota: "en millones de USD" },

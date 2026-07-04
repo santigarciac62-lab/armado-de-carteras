@@ -26,6 +26,7 @@ const KEYWORDS_POR_ID: Record<string, string[]> = {
   "tasa-caucion-ars": ["caución en pesos", "caucion en pesos"],
   "bcra-base-monetaria": ["base monetaria"],
   "bcra-reservas-brutas": ["reservas internacionales"],
+  "dolar-tcrm": ["tipo de cambio real multilateral", "itcrm"],
 };
 
 export async function obtenerBcra(seed: Indicador[]): Promise<Indicador[]> {
