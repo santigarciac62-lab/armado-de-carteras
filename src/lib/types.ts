@@ -122,3 +122,50 @@ export interface RevenueOficial {
   totalUsd: number;
   varQ2VsQ1: number | string;
 }
+
+export type CategoriaRentaFija = "Soberanos ARS" | "Soberanos USD" | "Corporativos USD";
+
+/**
+ * Instrumento de renta fija (seed manual, ver src/data/raw/rentaFija.json).
+ * No todos los campos aplican a todas las subcategorías (ver src/lib/rentaFija.ts):
+ * los campos ausentes en la fuente quedan en null en vez de omitirse, para que el
+ * tipo sea uniforme en toda la tabla.
+ */
+export interface InstrumentoRentaFija {
+  ticker: string;
+  emisor: string;
+  categoria: CategoriaRentaFija;
+  subcategoria: string;
+  moneda: Moneda;
+  /** ISO yyyy-mm-dd. Null solo en Lecap/Boncap, que en el seed vienen con días a vencimiento en vez de fecha. */
+  vencimiento: string | null;
+  diasAVencimientoSeed: number | null;
+  precioClean: number | null;
+  precioDirty: number | null;
+  tna: number | null;
+  tea: number | null;
+  duracionModificada: number | null;
+  paridad: number | null;
+  rendimientoCorriente: number | null;
+  margen: number | null;
+  tasaInteres: number | null;
+  fuenteFecha: string;
+}
+
+export interface LineaRentaFija {
+  ticker: string;
+  nominal: number;
+}
+
+export interface FlujoPago {
+  fecha: string; // ISO yyyy-mm-dd
+  ticker: string;
+  moneda: Moneda;
+  tipo: "cupon" | "amortizacion";
+  monto: number;
+}
+
+export interface PagoMensual {
+  mes: string; // "yyyy-mm"
+  porMoneda: Record<Moneda, number>;
+}
