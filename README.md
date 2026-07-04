@@ -26,8 +26,9 @@ la UI ni recuperación de contraseña:
   solo un redeploy del proyecto (Vercel lo hace solo al guardar la variable).
 - `AUTH_SECRET`: clave para firmar la cookie de sesión (`openssl rand -base64 32`).
   Si se cambia, todas las sesiones activas se invalidan.
-- Todo el sitio queda atrás del login (`src/middleware.ts`), incluida la
-  pantalla de armado — no solo las que muestran datos reales de clientes.
+- Todo el sitio queda atrás del login (`src/proxy.ts` — en Next.js 16
+  "Middleware" pasó a llamarse "Proxy"), incluida la pantalla de armado — no
+  solo las que muestran datos reales de clientes.
 - Sesión: cookie HttpOnly firmada con HMAC-SHA256, expira a los 7 días.
 
 **Importante:** sin `AUTH_SECRET`/`AUTH_USERS` configuradas, nadie puede
@@ -56,10 +57,22 @@ levantar el sitio por accidente sin login activo.
     confirmar en vivo). No cubre FCI: los fondos comunes no cotizan en mercado, hay
     que sumar una fuente de valor de cuotaparte (ej. CAFCI) aparte.
   - Activar con la variable de entorno `USE_DATA912=true`.
-- `src/lib/auth.ts` / `src/middleware.ts` — login y protección de rutas.
+- `src/lib/auth.ts` / `src/proxy.ts` — login y protección de rutas.
+- `src/data/raw/rentaFija.json` — universo de renta fija (soberanos ARS,
+  soberanos USD, corporativos energía) cargado a mano, fecha de operación
+  03/07/2026. Se reemplaza a mano cuando se quiera actualizar precios/tasas.
+  **Los vencimientos de Globales/Bonares/BCRA no venían en la planilla
+  original** (esas filas solo traían duración modificada) — se completaron
+  con fechas de pago públicas conocidas, pero conviene verificarlas contra
+  el prospecto antes de confiar en el simulador de calendario de pagos.
+- `src/lib/rentaFija.ts` — proyección de flujo de fondos por instrumento.
+  Es una aproximación simplificada (bullet + cupón a tasa fija constante);
+  no reproduce amortizaciones parciales reales ni la variación futura de
+  tasas flotantes/CER — el disclaimer se repite en la propia pantalla.
 
 ## Pantallas
 
 1. **Armado dinámico de carteras** (`/`) — implementada.
-2. **Cuentas con desvío** (`/desvios`) — implementada.
-3. **Seguimiento de oficiales** (`/oficiales`) — implementada.
+2. **Renta Fija** (`/renta-fija`) — implementada.
+3. **Cuentas con desvío** (`/desvios`) — implementada.
+4. **Seguimiento de oficiales** (`/oficiales`) — implementada.
