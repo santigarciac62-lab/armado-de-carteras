@@ -1,21 +1,11 @@
 "use client";
 
 import { Fragment, useMemo, useState } from "react";
-import { ClienteEnriquecido, Perfil, StatusDesvio } from "@/lib/types";
+import { ClienteEnriquecido, StatusDesvio } from "@/lib/types";
+import { PERFIL_LABEL, STATUS_LABEL } from "@/lib/bucket";
 import { BucketBar } from "./BucketBar";
 import { DetalleCliente } from "./DetalleCliente";
-
-const PERFIL_LABEL: Record<Perfil, string> = {
-  conservador: "Conservador",
-  moderado: "Moderado",
-  agresivo: "Agresivo",
-};
-
-const STATUS_LABEL: Record<StatusDesvio, string> = {
-  optimo: "Óptimo",
-  aceptable: "Aceptable",
-  revisar: "Revisar",
-};
+import { BotonFichaPdf } from "./BotonFichaPdf";
 
 const STATUS_PILL: Record<StatusDesvio, string> = {
   optimo: "pill-green",
@@ -102,9 +92,9 @@ export function TablaDesvios({ clientes }: { clientes: ClienteEnriquecido[] }) {
         <table className="w-full" style={{ borderCollapse: "collapse" }}>
           <thead>
             <tr>
-              {["Cliente", "Oficial", "Perfil", "Composición", "AUM (USD)", "Desvío", "Estado", ""].map((h, i) => (
+              {["Cliente", "Oficial", "Perfil", "Composición", "AUM (USD)", "Desvío", "Estado", "", ""].map((h, i) => (
                 <th
-                  key={h}
+                  key={`${h}-${i}`}
                   className={`text-[11px] font-medium uppercase tracking-wide px-4 py-3 ${
                     i >= 4 && i <= 5 ? "text-right" : "text-left"
                   }`}
@@ -150,13 +140,16 @@ export function TablaDesvios({ clientes }: { clientes: ClienteEnriquecido[] }) {
                   <td className="px-4 py-3 text-[12px]" style={{ color: "var(--text-soft)" }}>
                     {STATUS_LABEL[c.statusSemaforo]}
                   </td>
+                  <td className="px-4 py-3">
+                    <BotonFichaPdf cliente={c} />
+                  </td>
                   <td className="px-4 py-3 text-right text-[12px]" style={{ color: "var(--text-mute)" }}>
                     {expandido === c.numero ? "▲" : "▼"}
                   </td>
                 </tr>
                 {expandido === c.numero && (
                   <tr>
-                    <td colSpan={8} style={{ padding: 0, borderBottom: "1px solid var(--border)" }}>
+                    <td colSpan={9} style={{ padding: 0, borderBottom: "1px solid var(--border)" }}>
                       <DetalleCliente cliente={c} />
                     </td>
                   </tr>
@@ -165,7 +158,7 @@ export function TablaDesvios({ clientes }: { clientes: ClienteEnriquecido[] }) {
             ))}
             {filtrados.length === 0 && (
               <tr>
-                <td colSpan={8} className="text-center p-8 text-[13px]" style={{ color: "var(--text-mute)" }}>
+                <td colSpan={9} className="text-center p-8 text-[13px]" style={{ color: "var(--text-mute)" }}>
                   No hay cuentas que coincidan con los filtros.
                 </td>
               </tr>
@@ -211,6 +204,9 @@ export function TablaDesvios({ clientes }: { clientes: ClienteEnriquecido[] }) {
                 {expandido === c.numero ? "▲ Ocultar detalle" : "▼ Ver detalle"}
               </div>
             </button>
+            <div className="px-4 pb-3.5 -mt-1">
+              <BotonFichaPdf cliente={c} className="w-full text-[12px] font-medium px-3 py-2.5 rounded-md" />
+            </div>
             {expandido === c.numero && <DetalleCliente cliente={c} />}
           </div>
         ))}

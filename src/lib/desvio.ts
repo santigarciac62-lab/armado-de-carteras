@@ -1,4 +1,4 @@
-import { CARTERAS_MODELO } from "@/data/modelPortfolios";
+import { CARTERAS_MODELO, getCarteraModelo } from "@/data/modelPortfolios";
 import { UNIVERSO_INSTRUMENTOS } from "@/data/instrumentos";
 import { TC_REFERENCIA } from "@/lib/constants";
 import { BUCKETS, statusDesvio, trackingError } from "@/lib/bucket";
@@ -141,4 +141,22 @@ export function enriquecerCliente(
     alertasConcentracion: calcularAlertasConcentracion(raw.categorias, limitesConcentracion),
     recomendaciones: calcularRecomendaciones(bucketsCliente, mejor.modelo.id, mejor.modelo.buckets),
   };
+}
+
+export interface ComposicionBucket {
+  bucket: Bucket;
+  actual: number; // % (0-100)
+  objetivo: number; // % (0-100), según la cartera modelo de mejor ajuste del cliente
+  desvioPP: number;
+}
+
+/** Composición actual vs. cartera modelo del cliente, bucket por bucket — misma cuenta que
+ * usa la UI de "Cuentas con desvío" (pantalla y ficha PDF comparten esta única función). */
+export function composicionPorBucket(cliente: ClienteEnriquecido): ComposicionBucket[] {
+  const modelo = getCarteraModelo(cliente.perfilGrupo, cliente.monedaComparacion)!;
+  return BUCKETS.map((b) => {
+    const actual = (cliente.bucketsCliente[b] ?? 0) * 100;
+    const objetivo = (modelo.buckets[b] ?? 0) * 100;
+    return { bucket: b, actual, objetivo, desvioPP: actual - objetivo };
+  });
 }

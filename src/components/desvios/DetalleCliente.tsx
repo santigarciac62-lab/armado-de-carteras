@@ -1,14 +1,6 @@
 import { ClienteEnriquecido } from "@/lib/types";
+import { BUCKET_LABEL } from "@/lib/bucket";
 import { ComparacionBuckets } from "./ComparacionBuckets";
-
-const BUCKET_LABEL: Record<string, string> = {
-  FCI: "Fondos Comunes de Inversión",
-  Soberanos: "Soberanos / tasa fija",
-  ON: "Obligaciones Negociables",
-  Acciones: "Acciones",
-  Cedears: "Cedears",
-  Otros: "Otros",
-};
 
 export function DetalleCliente({ cliente }: { cliente: ClienteEnriquecido }) {
   return (

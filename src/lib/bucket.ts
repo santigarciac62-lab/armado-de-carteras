@@ -1,6 +1,16 @@
-import { Bucket, StatusDesvio } from "@/lib/types";
+import { Bucket, Perfil, StatusDesvio } from "@/lib/types";
 
 export const BUCKETS: Bucket[] = ["FCI", "Soberanos", "ON", "Acciones", "Cedears", "Otros"];
+
+/** Nombre largo de cada bucket, usado en el detalle de cliente (pantalla y ficha PDF). */
+export const BUCKET_LABEL: Record<Bucket, string> = {
+  FCI: "Fondos Comunes de Inversión",
+  Soberanos: "Soberanos / tasa fija",
+  ON: "Obligaciones Negociables",
+  Acciones: "Acciones",
+  Cedears: "Cedears",
+  Otros: "Otros",
+};
 
 /** Tracking error normalizado entre dos composiciones por bucket (0-1): ∑|actual-modelo| / 2.
  * Usado tanto para el desvío de clientes reales (Cuentas con desvío) como para la
@@ -20,3 +30,15 @@ export function statusDesvio(desvio: number): StatusDesvio {
   if (desvio < 0.3) return "aceptable";
   return "revisar";
 }
+
+export const PERFIL_LABEL: Record<Perfil, string> = {
+  conservador: "Conservador",
+  moderado: "Moderado",
+  agresivo: "Agresivo",
+};
+
+export const STATUS_LABEL: Record<StatusDesvio, string> = {
+  optimo: "Óptimo",
+  aceptable: "Aceptable",
+  revisar: "Revisar",
+};
