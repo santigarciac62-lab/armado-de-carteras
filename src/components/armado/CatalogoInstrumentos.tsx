@@ -53,7 +53,7 @@ export function CatalogoInstrumentos({
             <button
               key={b}
               onClick={() => setBucket(b)}
-              className="text-[11px] px-2.5 py-1.5 rounded-full font-medium transition-colors"
+              className="text-[11px] px-3 py-2 sm:px-2.5 sm:py-1.5 rounded-full font-medium transition-colors"
               style={
                 bucket === b
                   ? { background: "var(--navy)", color: "#fff" }
@@ -99,7 +99,7 @@ export function CatalogoInstrumentos({
               <button
                 onClick={() => onAgregar(inst.ticker)}
                 disabled={yaAgregado}
-                className="text-[11px] font-medium px-2.5 py-1.5 rounded-md shrink-0"
+                className="text-[11px] font-medium px-3 py-2 sm:px-2.5 sm:py-1.5 rounded-md shrink-0"
                 style={
                   yaAgregado
                     ? { background: "#EEF0F2", color: "var(--text-mute)" }

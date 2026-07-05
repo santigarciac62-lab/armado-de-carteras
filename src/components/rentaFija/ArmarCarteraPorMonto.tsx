@@ -126,8 +126,8 @@ export function ArmarCarteraPorMonto({ instrumentos }: { instrumentos: Instrumen
             {Math.abs(totalPct - 100) > 0.05 && (
               <button
                 onClick={normalizar}
-                className="text-[11px] font-medium px-2.5 py-1.5 rounded-md"
-                style={{ background: "var(--gold-soft)", color: "var(--gold)" }}
+                className="text-[11px] font-medium px-3 py-2 sm:px-2.5 sm:py-1.5 rounded-md"
+                style={{ background: "var(--blue-soft)", color: "var(--blue)" }}
               >
                 Normalizar a 100%
               </button>

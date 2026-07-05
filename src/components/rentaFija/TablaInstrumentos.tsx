@@ -94,7 +94,7 @@ export function TablaInstrumentos({
             <button
               key={c}
               onClick={() => setCategoria(c)}
-              className="text-[11px] px-2.5 py-1.5 rounded-full font-medium transition-colors"
+              className="text-[11px] px-3 py-2 sm:px-2.5 sm:py-1.5 rounded-full font-medium transition-colors"
               style={
                 categoria === c
                   ? { background: "var(--navy)", color: "#fff" }
@@ -215,7 +215,7 @@ export function TablaInstrumentos({
                       <button
                         onClick={() => onAgregar(i.ticker)}
                         disabled={yaAgregado}
-                        className="text-[11px] font-medium px-2.5 py-1.5 rounded-md whitespace-nowrap"
+                        className="text-[11px] font-medium px-3 py-2 sm:px-2.5 sm:py-1.5 rounded-md whitespace-nowrap"
                         style={
                           yaAgregado
                             ? { background: "#EEF0F2", color: "var(--text-mute)" }
