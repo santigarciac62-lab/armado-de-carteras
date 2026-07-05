@@ -3,7 +3,7 @@
 import { Bar, BarChart, CartesianGrid, Cell, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { OficialEnriquecido } from "@/data/oficiales";
 
-const PALETA = ["#0B1F3F", "#1B8E9C", "#C99C2E", "#5B7A99", "#8FB5D1", "#3A5686", "#59B4C0", "#8A95A7"];
+const PALETA = ["#12375F", "#0097B2", "#1362AD", "#616161", "#00012B", "#4FB8C9", "#4A6E9B", "#9A9A9A"];
 
 export function GraficoAumPorOficial({ oficiales }: { oficiales: OficialEnriquecido[] }) {
   const data = [...oficiales]
@@ -17,7 +17,7 @@ export function GraficoAumPorOficial({ oficiales }: { oficiales: OficialEnriquec
       </h3>
       <ResponsiveContainer width="100%" height={280}>
         <BarChart data={data} layout="vertical" margin={{ left: 0, right: 16 }}>
-          <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#F1F4F8" />
+          <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#E9EBEE" />
           <XAxis
             type="number"
             tickFormatter={(v) => `${Math.round(v / 1_000_000)}M`}

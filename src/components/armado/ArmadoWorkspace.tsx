@@ -50,7 +50,7 @@ function SegmentedButtons<T extends string>({
           style={
             valor === o.id
               ? { background: "var(--navy)", color: "#fff" }
-              : { background: "#FAFBFC", color: "var(--text-soft)" }
+              : { background: "#F7F8F9", color: "var(--text-soft)" }
           }
         >
           {o.label}

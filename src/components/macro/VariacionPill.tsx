@@ -10,7 +10,7 @@ export function VariacionPill({ label, valor }: { label: string; valor: number |
       className="pill"
       style={
         neutro
-          ? { background: "#F1F4F8", color: "var(--text-mute)" }
+          ? { background: "#EEF0F2", color: "var(--text-mute)" }
           : positivo
             ? { background: "var(--green-bg)", color: "var(--green)" }
             : { background: "var(--red-bg)", color: "var(--red)" }

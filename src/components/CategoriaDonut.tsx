@@ -42,7 +42,7 @@ export function CategoriaDonut({
               fontSize: 12,
               borderRadius: 8,
               border: "1px solid var(--border)",
-              fontFamily: "var(--font-plex-sans)",
+              fontFamily: "var(--font-lato)",
             }}
           />
         </PieChart>

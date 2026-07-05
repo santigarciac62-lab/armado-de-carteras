@@ -25,7 +25,7 @@ export function ComparacionBuckets({ cliente }: { cliente: ClienteEnriquecido })
                   style={
                     fuerte
                       ? { background: "var(--red-bg)", color: "var(--red)" }
-                      : { background: "#F1F4F8", color: "var(--text-mute)" }
+                      : { background: "#EEF0F2", color: "var(--text-mute)" }
                   }
                 >
                   {desvioPP > 0 ? "+" : ""}
@@ -33,7 +33,7 @@ export function ComparacionBuckets({ cliente }: { cliente: ClienteEnriquecido })
                 </span>
               </span>
             </div>
-            <div className="relative h-2 rounded-full" style={{ background: "#F1F4F8" }}>
+            <div className="relative h-2 rounded-full" style={{ background: "#EEF0F2" }}>
               <div
                 className="absolute h-2 rounded-full"
                 style={{ width: `${Math.min(100, actual)}%`, background: BUCKET_COLOR[b] }}

@@ -46,7 +46,7 @@ export function SeccionCard({ seccion }: { seccion: SeccionMacro }) {
           <div
             key={ind.id}
             className="px-4 py-2.5 flex flex-wrap items-center justify-between gap-x-3 gap-y-1"
-            style={idx > 0 ? { borderTop: "1px solid #F1F4F8" } : undefined}
+            style={idx > 0 ? { borderTop: "1px solid #E9EBEE" } : undefined}
           >
             <span className="text-[12px]" style={{ color: "var(--text)" }}>
               {ind.label}

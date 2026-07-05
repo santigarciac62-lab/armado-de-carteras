@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { FECHA_VISION_VIGENTE } from "@/data/modelPortfolios";
@@ -27,14 +28,17 @@ export async function Topbar({ active }: { active: string }) {
     <>
       <header style={{ background: "var(--navy)" }} className="text-white">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-8 py-3 sm:py-3.5 flex items-center justify-between gap-3 sm:gap-6 flex-wrap">
-          <div className="flex items-baseline gap-2 sm:gap-3">
-            <span className="font-serif-brand font-semibold text-base sm:text-lg tracking-tight">
-              D.A. Valores
-            </span>
-            <span className="text-white/30 hidden sm:inline">·</span>
-            <span className="text-[11px] sm:text-[12px] uppercase tracking-widest text-white/70 hidden sm:inline">
-              Armado de Carteras
-            </span>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Image src="/logo-isologo.svg" alt="" width={30} height={30} className="shrink-0 rounded-full bg-white p-0.5" />
+            <div className="flex items-baseline gap-2 sm:gap-3">
+              <span className="font-serif-brand text-base sm:text-lg tracking-tight">
+                D.A <span style={{ color: "var(--teal)" }}>VALORES</span>
+              </span>
+              <span className="text-white/30 hidden sm:inline">·</span>
+              <span className="text-[11px] sm:text-[12px] uppercase tracking-widest text-white/70 hidden sm:inline">
+                Armado de Carteras
+              </span>
+            </div>
           </div>
           <div className="flex items-center gap-3 sm:gap-6 text-[11px] sm:text-[12px] text-white/70">
             <div className="hidden sm:block">
@@ -55,6 +59,7 @@ export async function Topbar({ active }: { active: string }) {
             )}
           </div>
         </div>
+        <div style={{ background: "linear-gradient(90deg, var(--navy) 0%, var(--teal) 100%)", height: 3 }} />
       </header>
       <nav
         className="sticky top-0 z-10"
@@ -78,7 +83,7 @@ export async function Topbar({ active }: { active: string }) {
                 className="px-3 sm:px-5 py-3.5 sm:py-4 text-[13px] font-medium border-b-2 transition-colors whitespace-nowrap shrink-0"
                 style={
                   active === item.href
-                    ? { color: "var(--navy)", borderBottomColor: "var(--navy)" }
+                    ? { color: "var(--teal)", borderBottomColor: "var(--teal)" }
                     : { color: "var(--text-soft)", borderBottomColor: "transparent" }
                 }
               >

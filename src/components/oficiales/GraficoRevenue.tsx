@@ -19,7 +19,7 @@ export function GraficoRevenue({ revenue }: { revenue: RevenueOficial[] }) {
       </h3>
       <ResponsiveContainer width="100%" height={280}>
         <BarChart data={data} margin={{ left: 0, right: 12 }}>
-          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F4F8" />
+          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E9EBEE" />
           <XAxis
             dataKey="oficial"
             tick={{ fontSize: 10, fill: "var(--text-mute)" }}
@@ -34,8 +34,8 @@ export function GraficoRevenue({ revenue }: { revenue: RevenueOficial[] }) {
             contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid var(--border)" }}
           />
           <Legend wrapperStyle={{ fontSize: 12 }} />
-          <Bar dataKey="Q1 2026" fill="#8FB5D1" radius={[4, 4, 0, 0]} />
-          <Bar dataKey="Q2 2026" fill="#1B8E9C" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="Q1 2026" fill="#7FA8C9" radius={[4, 4, 0, 0]} />
+          <Bar dataKey="Q2 2026" fill="#0097B2" radius={[4, 4, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>

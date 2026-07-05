@@ -60,7 +60,7 @@ export function CarteraEnArmado({
                   className={`text-[11px] font-medium uppercase tracking-wide px-4 py-3 ${
                     i > 1 ? "text-right" : "text-left"
                   }`}
-                  style={{ color: "var(--text-mute)", background: "#F8FAFB", borderBottom: "1px solid var(--border)" }}
+                  style={{ color: "var(--text-mute)", background: "#F6F7F8", borderBottom: "1px solid var(--border)" }}
                 >
                   {h}
                 </th>
@@ -69,7 +69,7 @@ export function CarteraEnArmado({
           </thead>
           <tbody>
             {lineas.map((l) => (
-              <tr key={l.ticker} style={{ borderBottom: "1px solid #F1F4F8" }}>
+              <tr key={l.ticker} style={{ borderBottom: "1px solid #EEF0F2" }}>
                 <td className="px-4 py-2.5">
                   <div className="font-mono-brand text-[13px] font-medium" style={{ color: "var(--navy)" }}>
                     {l.ticker}

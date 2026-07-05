@@ -6,10 +6,10 @@ const ORDEN: Bucket[] = ["FCI", "Soberanos", "ON", "Acciones", "Cedears", "Otros
 export function BucketBar({ buckets }: { buckets: Record<Bucket, number> }) {
   const total = ORDEN.reduce((acc, b) => acc + (buckets[b] ?? 0), 0);
   if (total <= 0) {
-    return <div className="h-3.5 rounded" style={{ background: "#F1F4F8" }} />;
+    return <div className="h-3.5 rounded" style={{ background: "#EEF0F2" }} />;
   }
   return (
-    <div className="flex h-3.5 rounded overflow-hidden" style={{ background: "#F1F4F8" }}>
+    <div className="flex h-3.5 rounded overflow-hidden" style={{ background: "#EEF0F2" }}>
       {ORDEN.map((b) => {
         const pct = ((buckets[b] ?? 0) / total) * 100;
         if (pct < 0.5) return null;

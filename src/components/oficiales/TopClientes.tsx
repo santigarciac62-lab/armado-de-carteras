@@ -19,7 +19,7 @@ export function TopClientes({ clientes, top = 20 }: { clientes: ClienteEnriqueci
               <th
                 key={h}
                 className={`text-[11px] font-medium uppercase tracking-wide px-4 py-2.5 ${i >= 3 ? "text-right" : "text-left"}`}
-                style={{ color: "var(--text-mute)", background: "#F8FAFB", borderBottom: "1px solid var(--border)" }}
+                style={{ color: "var(--text-mute)", background: "#F6F7F8", borderBottom: "1px solid var(--border)" }}
               >
                 {h}
               </th>
@@ -28,7 +28,7 @@ export function TopClientes({ clientes, top = 20 }: { clientes: ClienteEnriqueci
         </thead>
         <tbody>
           {ordenados.map((c, i) => (
-            <tr key={c.numero} style={{ borderBottom: "1px solid #F1F4F8" }}>
+            <tr key={c.numero} style={{ borderBottom: "1px solid #EEF0F2" }}>
               <td className="px-4 py-2.5 text-[12px]" style={{ color: "var(--text-mute)" }}>
                 {i + 1}
               </td>

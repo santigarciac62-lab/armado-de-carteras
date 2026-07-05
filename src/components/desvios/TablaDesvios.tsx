@@ -108,7 +108,7 @@ export function TablaDesvios({ clientes }: { clientes: ClienteEnriquecido[] }) {
                   className={`text-[11px] font-medium uppercase tracking-wide px-4 py-3 ${
                     i >= 4 && i <= 5 ? "text-right" : "text-left"
                   }`}
-                  style={{ color: "var(--text-mute)", background: "#F8FAFB", borderBottom: "1px solid var(--border)" }}
+                  style={{ color: "var(--text-mute)", background: "#F6F7F8", borderBottom: "1px solid var(--border)" }}
                 >
                   {h}
                 </th>
@@ -118,7 +118,7 @@ export function TablaDesvios({ clientes }: { clientes: ClienteEnriquecido[] }) {
           <tbody>
             {filtrados.map((c) => (
               <Fragment key={c.numero}>
-                <tr onClick={() => toggle(c.numero)} className="cursor-pointer" style={{ borderBottom: "1px solid #F1F4F8" }}>
+                <tr onClick={() => toggle(c.numero)} className="cursor-pointer" style={{ borderBottom: "1px solid #EEF0F2" }}>
                   <td className="px-4 py-3">
                     <div className="text-[13px] font-medium" style={{ color: "var(--navy)" }}>
                       {c.denominacion}
@@ -177,7 +177,7 @@ export function TablaDesvios({ clientes }: { clientes: ClienteEnriquecido[] }) {
       {/* Mobile: tarjetas apiladas */}
       <div className="md:hidden">
         {filtrados.map((c) => (
-          <div key={c.numero} style={{ borderBottom: "1px solid #F1F4F8" }}>
+          <div key={c.numero} style={{ borderBottom: "1px solid #EEF0F2" }}>
             <button
               onClick={() => toggle(c.numero)}
               className="w-full text-left px-4 py-3.5 flex flex-col gap-2"
