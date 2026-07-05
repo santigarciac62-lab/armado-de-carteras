@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { href: "/", label: "Armado de carteras", disabled: false },
   { href: "/renta-fija", label: "Renta Fija", disabled: false },
   { href: "/desvios", label: "Cuentas con desvío", disabled: false },
+  { href: "/ficha-cliente", label: "Ficha de cliente", disabled: false },
   { href: "/oficiales", label: "Seguimiento de oficiales", disabled: false },
   { href: "/dashboard-macro", label: "Dashboard Financiero", disabled: false },
 ];
