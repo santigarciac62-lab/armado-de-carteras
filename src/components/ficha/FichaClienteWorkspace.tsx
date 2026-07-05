@@ -87,7 +87,13 @@ export function FichaClienteWorkspace({ clientes }: { clientes: ClienteEnriqueci
                 #{seleccionado.numero} · {seleccionado.oficial} · {STATUS_LABEL[seleccionado.statusSemaforo]}
               </div>
             </div>
-            <BotonFichaPdf cliente={seleccionado} />
+            {/* En mobile el botón de descarga vive dentro del fallback de FichaClientePreview
+                (no hay preview embebido ahí abajo de 768px); acá solo se muestra en desktop,
+                al lado del preview real, para no duplicar el CTA. */}
+            <BotonFichaPdf
+              cliente={seleccionado}
+              className="hidden md:inline-flex text-[13px] font-medium px-2.5 py-1.5 rounded-md whitespace-nowrap"
+            />
           </div>
           <FichaClientePreview cliente={seleccionado} />
         </div>
