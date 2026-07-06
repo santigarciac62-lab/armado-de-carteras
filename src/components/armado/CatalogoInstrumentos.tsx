@@ -53,11 +53,11 @@ export function CatalogoInstrumentos({
             <button
               key={b}
               onClick={() => setBucket(b)}
-              className="text-[11px] px-2.5 py-1.5 rounded-full font-medium transition-colors"
+              className="text-[11px] px-3 py-2 sm:px-2.5 sm:py-1.5 rounded-full font-medium transition-colors"
               style={
                 bucket === b
                   ? { background: "var(--navy)", color: "#fff" }
-                  : { background: "#F1F4F8", color: "var(--text-soft)" }
+                  : { background: "#EEF0F2", color: "var(--text-soft)" }
               }
             >
               {b}
@@ -73,7 +73,7 @@ export function CatalogoInstrumentos({
             <div
               key={inst.ticker}
               className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-3"
-              style={{ borderBottom: "1px solid #F1F4F8" }}
+              style={{ borderBottom: "1px solid #EEF0F2" }}
             >
               <div className="flex-1 min-w-0">
                 <div
@@ -99,10 +99,10 @@ export function CatalogoInstrumentos({
               <button
                 onClick={() => onAgregar(inst.ticker)}
                 disabled={yaAgregado}
-                className="text-[11px] font-medium px-2.5 py-1.5 rounded-md shrink-0"
+                className="text-[11px] font-medium px-3 py-2 sm:px-2.5 sm:py-1.5 rounded-md shrink-0"
                 style={
                   yaAgregado
-                    ? { background: "#F1F4F8", color: "var(--text-mute)" }
+                    ? { background: "#EEF0F2", color: "var(--text-mute)" }
                     : { background: "var(--teal-soft)", color: "var(--teal)" }
                 }
               >

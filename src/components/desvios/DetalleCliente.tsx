@@ -1,18 +1,10 @@
 import { ClienteEnriquecido } from "@/lib/types";
+import { BUCKET_LABEL } from "@/lib/bucket";
 import { ComparacionBuckets } from "./ComparacionBuckets";
-
-const BUCKET_LABEL: Record<string, string> = {
-  FCI: "Fondos Comunes de Inversión",
-  Soberanos: "Soberanos / tasa fija",
-  ON: "Obligaciones Negociables",
-  Acciones: "Acciones",
-  Cedears: "Cedears",
-  Otros: "Otros",
-};
 
 export function DetalleCliente({ cliente }: { cliente: ClienteEnriquecido }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 sm:p-5" style={{ background: "#FAFBFC" }}>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 sm:p-5" style={{ background: "#F7F8F9" }}>
       <div>
         <h4 className="text-[12px] font-medium uppercase tracking-wide mb-3" style={{ color: "var(--text-mute)" }}>
           Composición actual vs. cartera modelo

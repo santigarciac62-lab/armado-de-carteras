@@ -21,7 +21,7 @@ function MesBar({ mes }: { mes: PagoMensual }) {
         </span>
       </div>
       {mes.porMoneda.ARS > 0 && (
-        <div className="h-2 rounded-full" style={{ background: "#F1F4F8" }}>
+        <div className="h-2 rounded-full" style={{ background: "#EEF0F2" }}>
           <div
             className="h-2 rounded-full"
             style={{ width: `${(mes.porMoneda.ARS / max) * 100}%`, background: "var(--teal)" }}
@@ -29,7 +29,7 @@ function MesBar({ mes }: { mes: PagoMensual }) {
         </div>
       )}
       {mes.porMoneda.USD > 0 && (
-        <div className="h-2 rounded-full" style={{ background: "#F1F4F8" }}>
+        <div className="h-2 rounded-full" style={{ background: "#EEF0F2" }}>
           <div
             className="h-2 rounded-full"
             style={{ width: `${(mes.porMoneda.USD / max) * 100}%`, background: "var(--navy)" }}
@@ -69,7 +69,7 @@ export function CalendarioPagosView({
             ${fmtNum(totalArs, 0)}
           </div>
         </div>
-        <div className="rounded-lg p-4" style={{ background: "#E8ECF3" }}>
+        <div className="rounded-lg p-4" style={{ background: "#E7EAEF" }}>
           <div className="text-[11px] uppercase tracking-wide font-medium" style={{ color: "var(--navy)" }}>
             Total proyectado USD
           </div>
@@ -102,7 +102,7 @@ export function CalendarioPagosView({
                   <th
                     key={h}
                     className={`text-[11px] font-medium uppercase tracking-wide px-3 py-2 ${i === 3 ? "text-right" : "text-left"}`}
-                    style={{ color: "var(--text-mute)", background: "#F8FAFB", borderBottom: "1px solid var(--border)" }}
+                    style={{ color: "var(--text-mute)", background: "#F6F7F8", borderBottom: "1px solid var(--border)" }}
                   >
                     {h}
                   </th>
@@ -111,7 +111,7 @@ export function CalendarioPagosView({
             </thead>
             <tbody>
               {flujos.map((f, idx) => (
-                <tr key={`${f.ticker}-${f.fecha}-${idx}`} style={{ borderBottom: "1px solid #F1F4F8" }}>
+                <tr key={`${f.ticker}-${f.fecha}-${idx}`} style={{ borderBottom: "1px solid #EEF0F2" }}>
                   <td className="px-3 py-2 text-[13px] whitespace-nowrap">{fmtFecha(f.fecha)}</td>
                   <td className="px-3 py-2 font-mono-brand text-[13px]">{f.ticker}</td>
                   <td className="px-3 py-2 text-[12px]" style={{ color: "var(--text-soft)" }}>

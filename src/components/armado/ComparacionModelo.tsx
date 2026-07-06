@@ -33,7 +33,7 @@ export function ComparacionModelo({
                     style={
                       desviadoFuerte
                         ? { background: "var(--red-bg)", color: "var(--red)" }
-                        : { background: "#F1F4F8", color: "var(--text-mute)" }
+                        : { background: "#EEF0F2", color: "var(--text-mute)" }
                     }
                   >
                     {f.desvioPP > 0 ? "+" : ""}
@@ -41,7 +41,7 @@ export function ComparacionModelo({
                   </span>
                 </span>
               </div>
-              <div className="relative h-2 rounded-full" style={{ background: "#F1F4F8" }}>
+              <div className="relative h-2 rounded-full" style={{ background: "#EEF0F2" }}>
                 <div
                   className="absolute h-2 rounded-full"
                   style={{ width: `${Math.min(100, f.actual)}%`, background: color }}

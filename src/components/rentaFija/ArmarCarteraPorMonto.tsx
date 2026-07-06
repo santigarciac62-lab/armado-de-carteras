@@ -17,7 +17,7 @@ function SegmentedMoneda({ valor, onChange }: { valor: Moneda; onChange: (m: Mon
           key={m}
           onClick={() => onChange(m)}
           className="text-[13px] px-3 py-2 font-medium transition-colors"
-          style={valor === m ? { background: "var(--navy)", color: "#fff" } : { background: "#FAFBFC", color: "var(--text-soft)" }}
+          style={valor === m ? { background: "var(--navy)", color: "#fff" } : { background: "#F7F8F9", color: "var(--text-soft)" }}
         >
           {m}
         </button>
@@ -126,8 +126,8 @@ export function ArmarCarteraPorMonto({ instrumentos }: { instrumentos: Instrumen
             {Math.abs(totalPct - 100) > 0.05 && (
               <button
                 onClick={normalizar}
-                className="text-[11px] font-medium px-2.5 py-1.5 rounded-md"
-                style={{ background: "var(--gold-soft)", color: "var(--gold)" }}
+                className="text-[11px] font-medium px-3 py-2 sm:px-2.5 sm:py-1.5 rounded-md"
+                style={{ background: "var(--blue-soft)", color: "var(--blue)" }}
               >
                 Normalizar a 100%
               </button>
@@ -141,7 +141,7 @@ export function ArmarCarteraPorMonto({ instrumentos }: { instrumentos: Instrumen
                     <th
                       key={h}
                       className={`text-[11px] font-medium uppercase tracking-wide px-3 py-2.5 ${i >= 1 && i <= 3 ? "text-right" : "text-left"}`}
-                      style={{ color: "var(--text-mute)", background: "#F8FAFB", borderBottom: "1px solid var(--border)" }}
+                      style={{ color: "var(--text-mute)", background: "#F6F7F8", borderBottom: "1px solid var(--border)" }}
                     >
                       {h}
                     </th>
@@ -150,7 +150,7 @@ export function ArmarCarteraPorMonto({ instrumentos }: { instrumentos: Instrumen
               </thead>
               <tbody>
                 {lineasCalculadas.map((l) => (
-                  <tr key={l.ticker} style={{ borderBottom: "1px solid #F1F4F8" }}>
+                  <tr key={l.ticker} style={{ borderBottom: "1px solid #EEF0F2" }}>
                     <td className="px-3 py-2.5 font-mono-brand text-[13px] font-medium" style={{ color: "var(--navy)" }}>
                       {l.ticker}
                     </td>

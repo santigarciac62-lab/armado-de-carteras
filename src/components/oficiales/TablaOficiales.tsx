@@ -42,7 +42,7 @@ export function TablaOficiales({ oficiales }: { oficiales: OficialEnriquecido[] 
                 }`}
                 style={{
                   color: orden === c.key ? "var(--navy)" : "var(--text-mute)",
-                  background: "#F8FAFB",
+                  background: "#F6F7F8",
                   borderBottom: "1px solid var(--border)",
                 }}
               >
@@ -54,7 +54,7 @@ export function TablaOficiales({ oficiales }: { oficiales: OficialEnriquecido[] 
         </thead>
         <tbody>
           {ordenados.map((o) => (
-            <tr key={o.oficial} style={{ borderBottom: "1px solid #F1F4F8" }}>
+            <tr key={o.oficial} style={{ borderBottom: "1px solid #EEF0F2" }}>
               <td className="px-4 py-3 text-[13px] font-medium" style={{ color: "var(--navy)" }}>
                 {o.oficial}
               </td>

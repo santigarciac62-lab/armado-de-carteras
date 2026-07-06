@@ -1,24 +1,25 @@
-/** Paleta de categorías finas (las de la Visión), agrupadas visualmente por familia de bucket. */
+/** Paleta de categorías finas (las de la Visión), agrupadas visualmente por familia de bucket.
+ * Derivada de la paleta de marca D.A Valores (navy/teal/blue/gray + variantes). */
 export const CATEGORIA_COLOR: Record<string, string> = {
-  "FCI MM": "#0B1F3F",
-  "FCI MM USD": "#3A5686",
-  "FCI Latam": "#6E8CB8",
-  "Tasa Fija ARS": "#1B8E9C",
-  "Bonos HD": "#59B4C0",
-  "ON HD": "#C99C2E",
-  Acciones: "#5B7A99",
-  Cedears: "#8FB5D1",
+  "FCI MM": "#12375F",
+  "FCI MM USD": "#00012B",
+  "FCI Latam": "#4A6E9B",
+  "Tasa Fija ARS": "#0097B2",
+  "Bonos HD": "#4FB8C9",
+  "ON HD": "#1362AD",
+  Acciones: "#616161",
+  Cedears: "#A6A6A6",
 };
 
 export const BUCKET_COLOR: Record<string, string> = {
-  FCI: "#0B1F3F",
-  Soberanos: "#1B8E9C",
-  ON: "#C99C2E",
-  Acciones: "#5B7A99",
-  Cedears: "#8FB5D1",
-  Otros: "#8A95A7",
+  FCI: "#12375F",
+  Soberanos: "#0097B2",
+  ON: "#1362AD",
+  Acciones: "#616161",
+  Cedears: "#00012B",
+  Otros: "#9A9A9A",
 };
 
 export function colorDeCategoria(categoria: string): string {
-  return CATEGORIA_COLOR[categoria] ?? "#8A95A7";
+  return CATEGORIA_COLOR[categoria] ?? "#9A9A9A";
 }
