@@ -2,6 +2,9 @@ import { generarHistoricoSintetico } from "@/lib/rentaVariable/syntheticHistory"
 import { mediaMovil, calcularRSI, calcularMACD, MACDResultado } from "@/lib/rentaVariable/indicadoresTecnicos";
 import { scoreTecnico, scoreFundamental, señalDeScore, Señal } from "@/lib/rentaVariable/scoring";
 import { obtenerCotizacionesEnVivo, TickerRV, CotizacionRV } from "@/lib/rentaVariable/liveData";
+import { obtenerCotizacionesTwelveData } from "@/lib/rentaVariable/twelveDataProvider";
+
+export type FuentePrecioRV = "data912" | "twelvedata" | "demo";
 
 export type TipoActivoRV = "local" | "cedear" | "etf";
 
@@ -33,10 +36,13 @@ interface SeedActivoRV extends Fundamentales {
   tipo: TipoActivoRV;
   sector: SectorRV;
   /** Precio actual en ARS (las locales y los CEDEARs cotizan en pesos en BYMA) — dato de
-   * referencia (demo); se reemplaza por el precio/variación en vivo de Data912 cuando el
-   * ticker aparece en sus endpoints `arg_stocks`/`arg_cedears` (ver liveData.ts). */
+   * referencia (demo); se reemplaza por el precio/variación en vivo de Data912 (o, si ese
+   * no lo cubre, de Twelve Data) — ver obtenerUniversoRentaVariable. */
   precio: number;
   variacionDia: number; // %
+  /** Símbolo real de mercado para Twelve Data, si difiere del ticker interno (ej. la
+   * acción local YPFD cotiza en NYSE como "YPF"; PAMP, como "PAM"). */
+  simboloExterno?: string;
 }
 
 const SIN_FUNDAMENTALES: Fundamentales = {
@@ -69,8 +75,8 @@ const SEED: SeedActivoRV[] = [
   // Argentina/Merval
   { ticker: "GGAL", nombre: "Grupo Financiero Galicia", tipo: "local", sector: "Argentina/Merval", precio: 8185, variacionDia: 2.8, pe: 8, pb: 1.5, evEbitda: 5, roe: 0.18, margenNeto: 0.24, crecimientoRevenue: 0.221, crecimientoEps: 0.18 },
   { ticker: "BMA", nombre: "Banco Macro", tipo: "local", sector: "Argentina/Merval", precio: 14710, variacionDia: 1.85, pe: 7, pb: 1.2, evEbitda: 4.8, roe: 0.16, margenNeto: 0.242, crecimientoRevenue: 0.184, crecimientoEps: 0.15 },
-  { ticker: "YPFD", nombre: "YPF", tipo: "local", sector: "Argentina/Merval", precio: 71975, variacionDia: 0.56, pe: 5, pb: 0.8, evEbitda: 3.9, roe: 0.13, margenNeto: 0.089, crecimientoRevenue: 0.142, crecimientoEps: 0.12 },
-  { ticker: "PAMP", nombre: "Pampa Energía", tipo: "local", sector: "Argentina/Merval", precio: 5085, variacionDia: -0.97, pe: 10, pb: 2, evEbitda: 6, roe: 0.14, margenNeto: 0.124, crecimientoRevenue: 0.098, crecimientoEps: 0.09 },
+  { ticker: "YPFD", nombre: "YPF", tipo: "local", sector: "Argentina/Merval", precio: 71975, variacionDia: 0.56, simboloExterno: "YPF", pe: 5, pb: 0.8, evEbitda: 3.9, roe: 0.13, margenNeto: 0.089, crecimientoRevenue: 0.142, crecimientoEps: 0.12 },
+  { ticker: "PAMP", nombre: "Pampa Energía", tipo: "local", sector: "Argentina/Merval", precio: 5085, variacionDia: -0.97, simboloExterno: "PAM", pe: 10, pb: 2, evEbitda: 6, roe: 0.14, margenNeto: 0.124, crecimientoRevenue: 0.098, crecimientoEps: 0.09 },
   { ticker: "VIST", nombre: "Vista Energy (Cedear)", tipo: "cedear", sector: "Argentina/Merval", precio: 38000, variacionDia: 1.2, pe: 8, pb: 4, evEbitda: 6, roe: 0.43, margenNeto: 0.284, crecimientoRevenue: 0.684, crecimientoEps: 0.72 },
 
   // Tecnología/Semiconductores
@@ -120,7 +126,7 @@ export interface ActivoRV {
   sector: SectorRV;
   precio: number;
   variacionDia: number;
-  fuentePrecio: "data912" | "demo";
+  fuentePrecio: FuentePrecioRV;
   historico: { fecha: string; precio: number }[];
   sma20: (number | null)[];
   sma50: (number | null)[];
@@ -145,10 +151,10 @@ export interface ActivoRV {
   benchmarkPE: number;
 }
 
-function calcularActivo(seed: SeedActivoRV, enVivo?: CotizacionRV): ActivoRV {
+function calcularActivo(seed: SeedActivoRV, enVivo?: CotizacionRV, fuenteEnVivo?: FuentePrecioRV): ActivoRV {
   const precio = enVivo?.precio ?? seed.precio;
   const variacionDia = enVivo?.variacionDia ?? seed.variacionDia;
-  const fuentePrecio: "data912" | "demo" = enVivo ? "data912" : "demo";
+  const fuentePrecio: FuentePrecioRV = enVivo ? (fuenteEnVivo ?? "data912") : "demo";
 
   const historico = generarHistoricoSintetico(seed.ticker, precio);
   const cierres = historico.map((h) => h.precio);
@@ -217,17 +223,29 @@ function calcularActivo(seed: SeedActivoRV, enVivo?: CotizacionRV): ActivoRV {
   };
 }
 
-/** Universo completo, con precio/variación en vivo de Data912 donde esté disponible
- * (locales vía `arg_stocks`, CEDEARs/ETFs vía `arg_cedears`) y fallback a la semilla demo
- * para el resto. Se resuelve por request (no es un valor estático), porque depende de una
- * llamada de red. */
+/** Universo completo, con precio/variación en vivo en dos capas:
+ * 1. Data912 (locales vía `arg_stocks`, CEDEARs/ETFs vía `arg_cedears`).
+ * 2. Twelve Data, solo para lo que Data912 no resolvió (típicamente ETFs de EE.UU. y algún
+ *    nombre poco frecuente) — nunca pisa un ticker que ya vino de Data912.
+ * Lo que ninguna de las dos cubra queda con el precio/variación semilla (badge "Demo").
+ * Se resuelve por request (no es un valor estático), porque depende de llamadas de red. */
 export async function obtenerUniversoRentaVariable(): Promise<ActivoRV[]> {
   const tickersParaVivo: TickerRV[] = SEED.map((s) => ({
     ticker: s.ticker,
     claseActivo: s.tipo === "local" ? "Accion" : "Cedear",
     moneda: "ARS",
   }));
-  const enVivo = await obtenerCotizacionesEnVivo(tickersParaVivo);
+  const deData912 = await obtenerCotizacionesEnVivo(tickersParaVivo);
 
-  return SEED.map((seed) => calcularActivo(seed, enVivo.get(seed.ticker))).sort((a, b) => b.score - a.score);
+  const faltantes = SEED.filter((s) => !deData912.has(s.ticker)).map((s) => ({
+    ticker: s.ticker,
+    simboloExterno: s.simboloExterno,
+  }));
+  const deTwelveData = await obtenerCotizacionesTwelveData(faltantes);
+
+  return SEED.map((seed) => {
+    if (deData912.has(seed.ticker)) return calcularActivo(seed, deData912.get(seed.ticker), "data912");
+    if (deTwelveData.has(seed.ticker)) return calcularActivo(seed, deTwelveData.get(seed.ticker), "twelvedata");
+    return calcularActivo(seed);
+  }).sort((a, b) => b.score - a.score);
 }
