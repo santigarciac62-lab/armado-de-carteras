@@ -1,9 +1,20 @@
 "use client";
 
 import { useMemo, useState, useSyncExternalStore } from "react";
-import { ActivoRV, SECTORES_RV, SectorRV } from "@/data/rentaVariable";
+import { ActivoRV, FuentePrecioRV, SECTORES_RV, SectorRV } from "@/data/rentaVariable";
 
 const FAVORITOS_KEY = "rv_favoritos";
+
+const FUENTE_LABEL: Record<FuentePrecioRV, string> = {
+  data912: "Data912",
+  twelvedata: "Twelve Data",
+  demo: "Demo",
+};
+const FUENTE_PILL_STYLE: Record<FuentePrecioRV, { background: string; color: string }> = {
+  data912: { background: "var(--teal-soft)", color: "var(--teal)" },
+  twelvedata: { background: "var(--blue-soft)", color: "var(--blue)" },
+  demo: { background: "#EEF0F2", color: "var(--text-mute)" },
+};
 const FAVORITOS_EVENTO = "rv-favoritos-changed";
 
 // localStorage es un store externo mutable: se lee con useSyncExternalStore (no con
@@ -104,9 +115,7 @@ function FilaActivo({
         {activo.variacionDia.toFixed(2)}%
       </td>
       <td className="px-3 py-2.5 text-right">
-        <span className="pill" style={activo.fuentePrecio === "data912" ? { background: "var(--teal-soft)", color: "var(--teal)" } : { background: "#EEF0F2", color: "var(--text-mute)" }}>
-          {activo.fuentePrecio === "data912" ? "Data912" : "Demo"}
-        </span>
+        <span className="pill" style={FUENTE_PILL_STYLE[activo.fuentePrecio]}>{FUENTE_LABEL[activo.fuentePrecio]}</span>
       </td>
     </tr>
   );
