@@ -1,4 +1,13 @@
-import { Cotizacion, Instrumento } from "@/lib/types";
+import { Cotizacion, Instrumento, Moneda } from "@/lib/types";
+
+/** Forma mínima que necesita este proveedor — cualquier `Instrumento` la satisface, pero
+ * también permite reusarlo desde pantallas (ej. Renta Variable) que no tienen el tipo
+ * `Instrumento` completo (nombre/categoria/bucket/presenteEn) para cada ticker. */
+export interface TickerParaPrecio {
+  ticker: string;
+  claseActivo: Instrumento["claseActivo"];
+  moneda: Moneda;
+}
 
 /**
  * Proveedor real de precios usando https://data912.com (API pública, gratuita,
@@ -56,11 +65,11 @@ async function fetchEndpoint(endpoint: string): Promise<RawQuote[]> {
 }
 
 export async function getCotizacionesData912(
-  instrumentos: Instrumento[]
+  instrumentos: TickerParaPrecio[]
 ): Promise<Map<string, Cotizacion>> {
   const resultado = new Map<string, Cotizacion>();
 
-  const porEndpoint = new Map<string, Instrumento[]>();
+  const porEndpoint = new Map<string, TickerParaPrecio[]>();
   for (const inst of instrumentos) {
     const endpoint = ENDPOINT_POR_CLASE[inst.claseActivo];
     if (!endpoint) continue; // FCI: no aplica, ver docstring

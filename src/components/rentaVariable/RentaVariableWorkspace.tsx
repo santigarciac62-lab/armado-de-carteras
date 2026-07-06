@@ -2,20 +2,22 @@
 
 import { useState } from "react";
 import { ActivoRV } from "@/data/rentaVariable";
+import { CotizacionesTab } from "./CotizacionesTab";
 import { DashboardTab } from "./DashboardTab";
 import { TecnicoTab } from "./TecnicoTab";
 import { FundamentalTab } from "./FundamentalTab";
 
-type Tab = "dashboard" | "tecnico" | "fundamental";
+type Tab = "cotizaciones" | "dashboard" | "tecnico" | "fundamental";
 
 const TABS: { id: Tab; label: string }[] = [
+  { id: "cotizaciones", label: "Cotizaciones" },
   { id: "dashboard", label: "Dashboard" },
   { id: "tecnico", label: "Técnico" },
   { id: "fundamental", label: "Fundamental" },
 ];
 
 export function RentaVariableWorkspace({ activos }: { activos: ActivoRV[] }) {
-  const [tab, setTab] = useState<Tab>("dashboard");
+  const [tab, setTab] = useState<Tab>("cotizaciones");
   const [tickerActivo, setTickerActivo] = useState(activos[0]?.ticker ?? "");
 
   const activo = activos.find((a) => a.ticker === tickerActivo) ?? activos[0];
@@ -44,6 +46,7 @@ export function RentaVariableWorkspace({ activos }: { activos: ActivoRV[] }) {
         ))}
       </div>
 
+      {tab === "cotizaciones" && <CotizacionesTab activos={activos} onVerTecnico={irATecnico} />}
       {tab === "dashboard" && <DashboardTab activos={activos} onVerTecnico={irATecnico} />}
       {tab === "tecnico" && activo && <TecnicoTab activos={activos} activo={activo} onSeleccionar={setTickerActivo} />}
       {tab === "fundamental" && activo && (
