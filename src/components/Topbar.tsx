@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { href: "/ficha-cliente", label: "Ficha de cliente", disabled: false },
   { href: "/oficiales", label: "Seguimiento de oficiales", disabled: false },
   { href: "/dashboard-macro", label: "Dashboard Financiero", disabled: false },
+  { href: "/noticias", label: "Noticias", disabled: false },
 ];
 
 function formateaFecha(iso: string) {
