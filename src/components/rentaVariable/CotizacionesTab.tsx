@@ -87,11 +87,11 @@ function FilaActivo({
 }) {
   return (
     <tr style={{ borderBottom: "1px solid #EEF0F2" }}>
-      <td className="px-3 py-2.5 w-8">
+      <td className="px-1 py-2.5 w-9">
         <button
           onClick={onToggleFavorito}
           aria-label={esFavorito ? "Quitar de favoritos" : "Agregar a favoritos"}
-          className="text-[16px] leading-none"
+          className="flex items-center justify-center w-9 h-9 text-[16px] leading-none"
           style={{ color: esFavorito ? "var(--amber)" : "var(--border-strong)" }}
         >
           {esFavorito ? "★" : "☆"}
