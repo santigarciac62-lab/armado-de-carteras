@@ -2,6 +2,8 @@
 
 import { Moneda } from "@/lib/types";
 import { LineaCombinadaCalculada } from "@/lib/armadoCartera/tipos";
+import { leyDeInstrumento } from "@/lib/rentaFija";
+import { fmtPct } from "@/lib/formato";
 import { AnalisisInstrumento } from "./AnalisisInstrumento";
 
 export function PanelCartera({
@@ -58,13 +60,13 @@ export function PanelCartera({
       ) : (
         <>
           <div className="overflow-x-auto">
-            <table className="w-full" style={{ borderCollapse: "collapse", minWidth: 640 }}>
+            <table className="w-full" style={{ borderCollapse: "collapse", minWidth: 900 }}>
               <thead>
                 <tr>
-                  {["Instrumento", "% Cartera", "Monto", "", ""].map((h, i) => (
+                  {["Instrumento", "% Cartera", "Monto", "Duration", "TNA", "Ley", "", ""].map((h, i) => (
                     <th
                       key={`${h}-${i}`}
-                      className={`text-[11px] font-medium uppercase tracking-wide px-4 py-3 ${i > 0 && i < 3 ? "text-right" : "text-left"}`}
+                      className={`text-[11px] font-medium uppercase tracking-wide px-4 py-3 ${i > 0 && i < 5 ? "text-right" : "text-left"}`}
                       style={{ color: "var(--text-mute)", background: "#F6F7F8", borderBottom: "1px solid var(--border)" }}
                     >
                       {h}
@@ -112,6 +114,17 @@ export function PanelCartera({
                       {simbolo}
                       {Math.round(l.monto).toLocaleString("es-AR")}
                     </td>
+                    <td className="px-4 py-2.5 text-right font-mono-brand text-[13px]" style={{ color: "var(--text)" }}>
+                      {l.instrumentoRentaFija?.duracionModificada != null
+                        ? `${l.instrumentoRentaFija.duracionModificada.toFixed(1)}a`
+                        : "—"}
+                    </td>
+                    <td className="px-4 py-2.5 text-right font-mono-brand text-[13px]" style={{ color: "var(--text)" }}>
+                      {l.instrumentoRentaFija ? fmtPct(l.instrumentoRentaFija.tna, 1) : "—"}
+                    </td>
+                    <td className="px-4 py-2.5 text-right text-[12px]" style={{ color: "var(--text-soft)" }}>
+                      {l.instrumentoRentaFija ? (leyDeInstrumento(l.instrumentoRentaFija) ?? "—") : "—"}
+                    </td>
                     <td className="px-4 py-2.5 text-right">
                       <button
                         onClick={() => onToggleExpandir(l.ticker)}
@@ -148,6 +161,9 @@ export function PanelCartera({
                     {simbolo}
                     {Math.round(montoTotal).toLocaleString("es-AR")}
                   </td>
+                  <td />
+                  <td />
+                  <td />
                   <td />
                   <td />
                 </tr>
