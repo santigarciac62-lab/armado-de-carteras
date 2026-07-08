@@ -20,7 +20,7 @@ export default async function Home() {
           className="font-serif-brand font-medium text-[24px] sm:text-[32px] leading-tight mb-2.5 tracking-tight"
           style={{ color: "var(--navy)" }}
         >
-          Armado dinámico de carteras
+          Visión de Portafolio
         </h1>
         <p className="text-[14px] sm:text-[15px] max-w-[760px]" style={{ color: "var(--text-soft)" }}>
           Combiná los instrumentos recomendados en la Visión de Portafolio vigente para armar una cartera
