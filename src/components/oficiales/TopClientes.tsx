@@ -11,7 +11,7 @@ export function TopClientes({ clientes, top = 20 }: { clientes: ClienteEnriqueci
           Top {top} clientes por AUM
         </h3>
       </div>
-      <div className="overflow-x-auto">
+      <div className="hidden md:block overflow-x-auto">
       <table className="w-full" style={{ borderCollapse: "collapse", minWidth: 560 }}>
         <thead>
           <tr>
@@ -62,6 +62,45 @@ export function TopClientes({ clientes, top = 20 }: { clientes: ClienteEnriqueci
           ))}
         </tbody>
       </table>
+      </div>
+
+      {/* Mobile: tarjetas apiladas */}
+      <div className="md:hidden">
+        {ordenados.map((c, i) => (
+          <div key={c.numero} className="px-4 py-3 flex items-start justify-between gap-2" style={{ borderBottom: "1px solid #EEF0F2" }}>
+            <div className="min-w-0">
+              <div className="text-[12px]" style={{ color: "var(--text-mute)" }}>
+                #{i + 1}
+              </div>
+              <div className="text-[13px] font-medium truncate" style={{ color: "var(--navy)" }}>
+                {c.denominacion}
+              </div>
+              <div className="text-[12px] truncate" style={{ color: "var(--text-soft)" }}>
+                {c.oficial}
+              </div>
+            </div>
+            <div className="text-right shrink-0">
+              <div className="font-mono-brand text-[13px]" style={{ color: "var(--text)" }}>
+                {Math.round(c.aumUsd).toLocaleString("es-AR")}
+              </div>
+              <div className="text-[11px] mt-0.5" style={{ color: "var(--text-mute)" }}>
+                {((c.aumUsd / aumTotal) * 100).toFixed(1)}%
+              </div>
+              <span
+                className="pill mt-1 inline-block"
+                style={
+                  c.statusSemaforo === "optimo"
+                    ? { background: "var(--green-bg)", color: "var(--green)" }
+                    : c.statusSemaforo === "aceptable"
+                      ? { background: "var(--amber-bg)", color: "var(--amber)" }
+                      : { background: "var(--red-bg)", color: "var(--red)" }
+                }
+              >
+                {(c.desvio * 100).toFixed(0)}%
+              </span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -59,7 +59,8 @@ export function PanelCartera({
         </div>
       ) : (
         <>
-          <div className="overflow-x-auto">
+          {/* Desktop/tablet: tabla completa con las 8 columnas */}
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full" style={{ borderCollapse: "collapse", minWidth: 900 }}>
               <thead>
                 <tr>
@@ -171,11 +172,116 @@ export function PanelCartera({
             </table>
           </div>
 
+          {/* Mobile: tarjetas apiladas, sin scroll horizontal — mismo patrón que
+              TablaDesvios.tsx en Cuentas con desvío. */}
+          <div className="md:hidden">
+            {lineas.map((l) => (
+              <div key={l.ticker} className="px-4 py-3" style={{ borderBottom: "1px solid #EEF0F2" }}>
+                <div className="flex items-start justify-between gap-2 mb-2">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <span
+                        className="text-[9px] px-1.5 py-0.5 rounded-full font-medium shrink-0"
+                        style={
+                          l.clase === "rentaFija"
+                            ? { background: "var(--teal-soft)", color: "var(--teal)" }
+                            : { background: "var(--blue-soft)", color: "var(--blue)" }
+                        }
+                      >
+                        {l.clase === "rentaFija" ? "RF" : "RV"}
+                      </span>
+                      <span className="font-mono-brand text-[14px] font-medium" style={{ color: "var(--navy)" }}>
+                        {l.ticker}
+                      </span>
+                    </div>
+                    <div className="text-[11px] mt-0.5 truncate" style={{ color: "var(--text-mute)" }}>
+                      {l.categoriaLabel}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => onQuitar(l.ticker)}
+                    className="text-[16px] px-2 py-1.5 rounded shrink-0"
+                    style={{ color: "var(--text-mute)" }}
+                    aria-label={`Quitar ${l.ticker}`}
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <div className="flex items-center gap-4 mb-2">
+                  <div className="flex items-center">
+                    <input
+                      type="number"
+                      min={0}
+                      max={100}
+                      step={0.5}
+                      value={l.pct}
+                      onChange={(e) => onCambiarPct(l.ticker, parseFloat(e.target.value) || 0)}
+                      className="w-[64px] text-right font-mono-brand text-[16px] px-2 py-1.5 rounded-md"
+                      style={{ border: "1px solid var(--border-strong)" }}
+                    />
+                    <span className="text-[12px] ml-1" style={{ color: "var(--text-mute)" }}>%</span>
+                  </div>
+                  <span className="font-mono-brand text-[13px]" style={{ color: "var(--text)" }}>
+                    {simbolo}
+                    {Math.round(l.monto).toLocaleString("es-AR")}
+                  </span>
+                </div>
+
+                {l.instrumentoRentaFija && (
+                  <div className="flex items-center gap-3 text-[11px] mb-2" style={{ color: "var(--text-soft)" }}>
+                    <span>
+                      Duration <strong style={{ color: "var(--text)" }}>{l.instrumentoRentaFija.duracionModificada != null ? `${l.instrumentoRentaFija.duracionModificada.toFixed(1)}a` : "—"}</strong>
+                    </span>
+                    <span>
+                      TNA <strong style={{ color: "var(--text)" }}>{fmtPct(l.instrumentoRentaFija.tna, 1)}</strong>
+                    </span>
+                    <span>
+                      Ley <strong style={{ color: "var(--text)" }}>{leyDeInstrumento(l.instrumentoRentaFija) ?? "—"}</strong>
+                    </span>
+                  </div>
+                )}
+
+                <button
+                  onClick={() => onToggleExpandir(l.ticker)}
+                  className="w-full text-[12px] font-medium px-3 py-2.5 rounded-md text-center"
+                  style={{ background: "#F6F7F8", color: "var(--text-soft)" }}
+                >
+                  {expandido === l.ticker ? "▲ Ocultar análisis" : "▼ Ver análisis"}
+                </button>
+                {expandido === l.ticker && (
+                  <div className="-mx-4 mt-3" style={{ borderTop: "1px solid var(--border)" }}>
+                    <AnalisisInstrumento
+                      linea={l}
+                      justificacion={justificaciones[l.ticker] ?? ""}
+                      onJustificacionChange={(texto) => onJustificacionChange(l.ticker, texto)}
+                    />
+                  </div>
+                )}
+              </div>
+            ))}
+            <div className="px-4 py-3 flex items-center justify-between" style={{ background: "#F6F7F8" }}>
+              <span className="text-[12px] font-medium" style={{ color: "var(--text-soft)" }}>
+                Total
+              </span>
+              <div className="flex items-center gap-3">
+                <span className={`pill ${Math.abs(totalPct - 100) < 0.05 ? "pill-green" : Math.abs(totalPct - 100) < 5 ? "pill-amber" : "pill-red"}`}>
+                  {totalPct.toFixed(1)}%
+                </span>
+                <span className="font-mono-brand text-[13px] font-semibold" style={{ color: "var(--navy)" }}>
+                  {simbolo}
+                  {Math.round(montoTotal).toLocaleString("es-AR")}
+                </span>
+              </div>
+            </div>
+          </div>
+
           {/* Fuera del contenedor con scroll horizontal a propósito: el panel de análisis
               es contenido rico (gráfico, tiles, textarea) pensado para reflow completo,
-              no para vivir adentro de una tabla angosta con scroll lateral. */}
+              no para vivir adentro de una tabla angosta con scroll lateral. Solo desktop/tablet
+              — en mobile el análisis se muestra adentro de cada tarjeta (ver arriba). */}
           {lineaExpandida && (
-            <div style={{ borderTop: "1px solid var(--border)" }}>
+            <div className="hidden md:block" style={{ borderTop: "1px solid var(--border)" }}>
               <AnalisisInstrumento
                 linea={lineaExpandida}
                 justificacion={justificaciones[lineaExpandida.ticker] ?? ""}

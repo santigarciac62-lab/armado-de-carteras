@@ -265,7 +265,7 @@ export function CarteraCombinadaWorkspace({
         </div>
       </div>
 
-      <div className="flex justify-end mb-4">
+      <div className="flex sm:justify-end mb-4">
         <BotonDescargarInformePdf
           lineas={lineasCalculadas}
           totalPct={totalPct}
