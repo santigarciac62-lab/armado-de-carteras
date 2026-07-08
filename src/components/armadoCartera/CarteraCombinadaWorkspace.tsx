@@ -7,10 +7,12 @@ import { FilaSelector, LineaCarteraCombinada } from "@/lib/armadoCartera/tipos";
 import { calcularLineasCombinadas, sumaPct } from "@/lib/armadoCartera/calculos";
 import { normalizarUniverso } from "@/lib/armadoCartera/normalizar";
 import { justificacionAutogenerada } from "@/lib/armadoCartera/justificacion";
+import { segmentosComposicion } from "@/lib/armadoCartera/coloresSector";
 import { CategoriaDonut } from "@/components/CategoriaDonut";
 import { SelectorInstrumentosCombinado } from "./SelectorInstrumentosCombinado";
 import { PanelCartera } from "./PanelCartera";
 import { CalendarioRentaFijaDeCartera } from "./CalendarioRentaFijaDeCartera";
+import { BotonDescargarInformePdf } from "./BotonDescargarInformePdf";
 
 function SegmentedButtons<T extends string>({
   opciones,
@@ -81,6 +83,14 @@ export function CarteraCombinadaWorkspace({
     { categoria: "Renta Fija", pct: pctRentaFija, color: "var(--teal)" },
     { categoria: "Renta Variable", pct: pctRentaVariable, color: "var(--blue)" },
   ];
+
+  const sectorData = useMemo(() => {
+    const pctPorCategoria = new Map<string, number>();
+    for (const l of lineasCalculadas) {
+      pctPorCategoria.set(l.categoriaLabel, (pctPorCategoria.get(l.categoriaLabel) ?? 0) + l.pct);
+    }
+    return segmentosComposicion(pctPorCategoria);
+  }, [lineasCalculadas]);
 
   const agregarInstrumento = useCallback((fila: FilaSelector) => {
     setLineas((prev) => {
@@ -212,24 +222,58 @@ export function CarteraCombinadaWorkspace({
           />
 
           <div
-            className="rounded-[10px] p-4 flex flex-col sm:flex-row items-center gap-5"
+            className="rounded-[10px] p-4 grid grid-cols-1 md:grid-cols-2 gap-5"
             style={{ background: "var(--card)", border: "1px solid var(--border)" }}
           >
-            <CategoriaDonut data={donutData} centerLabel="Clases" centerValue={String(lineas.length)} />
-            <div className="flex flex-col gap-1.5 text-[12px] w-full">
-              {donutData.map((d) => (
-                <div key={d.categoria} className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: d.color }} />
-                  <span style={{ color: "var(--text-soft)" }}>{d.categoria}</span>
-                  <span className="font-mono-brand font-medium ml-auto" style={{ color: "var(--text)" }}>
-                    {d.pct.toFixed(1)}%
-                  </span>
-                </div>
-              ))}
-              {lineas.length === 0 && <span style={{ color: "var(--text-mute)" }}>Sin composición todavía</span>}
+            <div className="flex flex-col sm:flex-row items-center gap-5">
+              <CategoriaDonut data={donutData} centerLabel="Clases" centerValue={String(lineas.length)} />
+              <div className="flex flex-col gap-1.5 text-[12px] w-full">
+                {donutData.map((d) => (
+                  <div key={d.categoria} className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: d.color }} />
+                    <span style={{ color: "var(--text-soft)" }}>{d.categoria}</span>
+                    <span className="font-mono-brand font-medium ml-auto" style={{ color: "var(--text)" }}>
+                      {d.pct.toFixed(1)}%
+                    </span>
+                  </div>
+                ))}
+                {lineas.length === 0 && <span style={{ color: "var(--text-mute)" }}>Sin composición todavía</span>}
+              </div>
+            </div>
+
+            <div
+              className="flex flex-col sm:flex-row items-center gap-5 pt-5 md:pt-0 md:pl-5 border-t md:border-t-0 md:border-l"
+              style={{ borderColor: "var(--border)" }}
+            >
+              <CategoriaDonut data={sectorData} centerLabel="Sectores" centerValue={String(sectorData.length)} />
+              <div className="flex flex-col gap-1.5 text-[12px] w-full">
+                {sectorData.map((d) => (
+                  <div key={d.categoria} className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-sm shrink-0" style={{ background: d.color }} />
+                    <span className="truncate" style={{ color: "var(--text-soft)" }}>
+                      {d.categoria}
+                    </span>
+                    <span className="font-mono-brand font-medium ml-auto shrink-0" style={{ color: "var(--text)" }}>
+                      {d.pct.toFixed(1)}%
+                    </span>
+                  </div>
+                ))}
+                {lineas.length === 0 && <span style={{ color: "var(--text-mute)" }}>Sin composición todavía</span>}
+              </div>
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="flex justify-end mb-4">
+        <BotonDescargarInformePdf
+          lineas={lineasCalculadas}
+          totalPct={totalPct}
+          montoTotal={monto}
+          moneda={monedaMonto}
+          justificaciones={justificaciones}
+          universoRentaFija={universoRentaFija}
+        />
       </div>
 
       <CalendarioRentaFijaDeCartera lineas={lineasCalculadas} universoRentaFija={universoRentaFija} />

@@ -13,9 +13,6 @@ export function AnalisisRentaFijaDetalle({ instrumento }: { instrumento: Instrum
 
   return (
     <div>
-      <h4 className="text-[12px] font-medium uppercase tracking-wide mb-3" style={{ color: "var(--text-mute)" }}>
-        Análisis del instrumento — {instrumento.emisor} ({instrumento.subcategoria})
-      </h4>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
         {tiles.map((t) => (
           <div key={t.label} className="rounded-md p-3" style={{ background: "var(--card)", border: "1px solid var(--border)" }}>

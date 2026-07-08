@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { FlujoPago, PagoMensual } from "@/lib/types";
 import { fmtFecha, fmtNum } from "@/lib/formato";
 
@@ -43,10 +46,15 @@ function MesBar({ mes }: { mes: PagoMensual }) {
 export function CalendarioPagosView({
   flujos,
   porMes,
+  detalleDesplegable = false,
 }: {
   flujos: FlujoPago[];
   porMes: PagoMensual[];
+  /** Si es true, "Detalle de pagos" arranca colapsado con su propio toggle. Default false
+   * para no cambiar el comportamiento donde ya se usa este componente (pestaña Renta Fija). */
+  detalleDesplegable?: boolean;
 }) {
+  const [detalleAbierto, setDetalleAbierto] = useState(!detalleDesplegable);
   const totalArs = flujos.filter((f) => f.moneda === "ARS").reduce((a, f) => a + f.monto, 0);
   const totalUsd = flujos.filter((f) => f.moneda === "USD").reduce((a, f) => a + f.monto, 0);
 
@@ -91,41 +99,54 @@ export function CalendarioPagosView({
       </div>
 
       <div>
-        <h4 className="text-[12px] font-medium uppercase tracking-wide mb-3" style={{ color: "var(--text-mute)" }}>
-          Detalle de pagos
-        </h4>
-        <div className="overflow-x-auto">
-          <table className="w-full" style={{ borderCollapse: "collapse", minWidth: 480 }}>
-            <thead>
-              <tr>
-                {["Fecha", "Instrumento", "Tipo", "Monto"].map((h, i) => (
-                  <th
-                    key={h}
-                    className={`text-[11px] font-medium uppercase tracking-wide px-3 py-2 ${i === 3 ? "text-right" : "text-left"}`}
-                    style={{ color: "var(--text-mute)", background: "#F6F7F8", borderBottom: "1px solid var(--border)" }}
-                  >
-                    {h}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {flujos.map((f, idx) => (
-                <tr key={`${f.ticker}-${f.fecha}-${idx}`} style={{ borderBottom: "1px solid #EEF0F2" }}>
-                  <td className="px-3 py-2 text-[13px] whitespace-nowrap">{fmtFecha(f.fecha)}</td>
-                  <td className="px-3 py-2 font-mono-brand text-[13px]">{f.ticker}</td>
-                  <td className="px-3 py-2 text-[12px]" style={{ color: "var(--text-soft)" }}>
-                    {f.tipo === "cupon" ? "Cupón" : "Cupón + capital"}
-                  </td>
-                  <td className="px-3 py-2 text-right font-mono-brand text-[13px]">
-                    {f.moneda === "USD" ? "USD " : "$"}
-                    {fmtNum(f.monto, 0)}
-                  </td>
+        {detalleDesplegable ? (
+          <button
+            onClick={() => setDetalleAbierto((v) => !v)}
+            className="flex items-center gap-1.5 text-[12px] font-medium uppercase tracking-wide mb-3"
+            style={{ color: "var(--text-mute)" }}
+          >
+            <span>{detalleAbierto ? "▲" : "▼"}</span>
+            Detalle de pagos
+          </button>
+        ) : (
+          <h4 className="text-[12px] font-medium uppercase tracking-wide mb-3" style={{ color: "var(--text-mute)" }}>
+            Detalle de pagos
+          </h4>
+        )}
+        {detalleAbierto && (
+          <div className="overflow-x-auto">
+            <table className="w-full" style={{ borderCollapse: "collapse", minWidth: 480 }}>
+              <thead>
+                <tr>
+                  {["Fecha", "Instrumento", "Tipo", "Monto"].map((h, i) => (
+                    <th
+                      key={`${h}-${i}`}
+                      className={`text-[11px] font-medium uppercase tracking-wide px-3 py-2 ${i === 3 ? "text-right" : "text-left"}`}
+                      style={{ color: "var(--text-mute)", background: "#F6F7F8", borderBottom: "1px solid var(--border)" }}
+                    >
+                      {h}
+                    </th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {flujos.map((f, idx) => (
+                  <tr key={`${f.ticker}-${f.fecha}-${idx}`} style={{ borderBottom: "1px solid #EEF0F2" }}>
+                    <td className="px-3 py-2 text-[13px] whitespace-nowrap">{fmtFecha(f.fecha)}</td>
+                    <td className="px-3 py-2 font-mono-brand text-[13px]">{f.ticker}</td>
+                    <td className="px-3 py-2 text-[12px]" style={{ color: "var(--text-soft)" }}>
+                      {f.tipo === "cupon" ? "Cupón" : "Cupón + capital"}
+                    </td>
+                    <td className="px-3 py-2 text-right font-mono-brand text-[13px]">
+                      {f.moneda === "USD" ? "USD " : "$"}
+                      {fmtNum(f.monto, 0)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
       <p className="text-[11px]" style={{ color: "var(--text-mute)" }}>
