@@ -127,3 +127,21 @@ export function agruparPorMes(flujos: FlujoPago[]): PagoMensual[] {
   }
   return Array.from(grupos.values()).sort((a, b) => a.mes.localeCompare(b.mes));
 }
+
+/**
+ * Ley aplicable, inferida por subcategoría — no viene en el dataset. Los soberanos ARS
+ * (Lecap/Boncap, Botes, Tamar, CER, USD Linked, Badlar) y BCRA/Bonares se emiten bajo ley
+ * argentina; Globales bajo ley de Nueva York. Para "Energía" (corporativos) la ley varía
+ * bono por bono y no se puede inferir de forma confiable solo por subcategoría — se
+ * devuelve `null` (mostrar "—") en vez de arriesgar un dato legal incorrecto.
+ */
+export function leyDeInstrumento(instrumento: InstrumentoRentaFija): "Local" | "Extranjera" | null {
+  switch (instrumento.subcategoria) {
+    case "Globales":
+      return "Extranjera";
+    case "Energía":
+      return null;
+    default:
+      return "Local";
+  }
+}

@@ -5,11 +5,11 @@ import { FECHA_VISION_VIGENTE } from "@/data/modelPortfolios";
 import { COOKIE_NAME, verificarSesion } from "@/lib/auth";
 
 const NAV_ITEMS = [
-  { href: "/", label: "Armado de carteras", disabled: false },
+  { href: "/", label: "Visión de Portafolio", disabled: false },
+  { href: "/armado-cartera", label: "Armado de Cartera", disabled: false },
   { href: "/renta-fija", label: "Renta Fija", disabled: false },
   { href: "/renta-variable", label: "Renta Variable", disabled: false },
   { href: "/desvios", label: "Cuentas con desvío", disabled: false },
-  { href: "/ficha-cliente", label: "Ficha de cliente", disabled: false },
   { href: "/oficiales", label: "Seguimiento de oficiales", disabled: false },
   { href: "/dashboard-macro", label: "Dashboard Financiero", disabled: false },
   { href: "/noticias", label: "Noticias", disabled: false },
