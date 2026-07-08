@@ -75,7 +75,7 @@ export function BotonDescargarInformePdf({
     <button
       onClick={descargar}
       disabled={cargando || lineas.length === 0}
-      className="text-[12px] font-medium px-3.5 py-2.5 sm:py-2 rounded-md whitespace-nowrap disabled:opacity-50"
+      className="w-full sm:w-auto text-[12px] font-medium px-3.5 py-2.5 sm:py-2 rounded-md whitespace-nowrap disabled:opacity-50"
       style={{ background: "var(--navy)", color: "#fff" }}
     >
       {cargando ? "Generando…" : "Descargar informe (PDF)"}

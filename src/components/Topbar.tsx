@@ -53,7 +53,7 @@ export async function Topbar({ active }: { active: string }) {
                 <form method="POST" action="/api/logout">
                   <button
                     type="submit"
-                    className="text-white/70 hover:text-white underline underline-offset-2 py-2 -my-2"
+                    className="text-white/70 hover:text-white underline underline-offset-2 py-2 px-1.5 -my-2 -mx-1.5"
                   >
                     Salir
                   </button>
