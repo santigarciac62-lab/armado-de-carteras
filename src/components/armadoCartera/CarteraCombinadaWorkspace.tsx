@@ -70,8 +70,8 @@ export function CarteraCombinadaWorkspace({
   );
 
   const lineasCalculadas = useMemo(
-    () => calcularLineasCombinadas(lineas, monto, rentaFijaPorTicker, rentaVariablePorTicker),
-    [lineas, monto, rentaFijaPorTicker, rentaVariablePorTicker]
+    () => calcularLineasCombinadas(lineas, monto, monedaMonto, rentaFijaPorTicker, rentaVariablePorTicker),
+    [lineas, monto, monedaMonto, rentaFijaPorTicker, rentaVariablePorTicker]
   );
 
   const totalPct = useMemo(() => sumaPct(lineas), [lineas]);
