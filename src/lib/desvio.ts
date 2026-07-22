@@ -14,10 +14,17 @@ import {
 /** Perfil por defecto para clientes sin Test del Inversor cargado (decisión confirmada con la mesa). */
 export const PERFIL_POR_DEFECTO: Perfil = "moderado";
 
+/** El export de tenencias trajo dos formatos distintos para esta columna según la
+ * versión de la planilla de la mesa: frases largas ("Especulativo (Tolerancia Media
+ * al Riesgo)") en exports viejos, palabras cortas ("Moderado") desde SdC_207_v4.xlsx.
+ * Se aceptan ambos para no depender de qué formato use el próximo refresh. */
 const TEST_INVERSOR_A_PERFIL: Record<string, Perfil> = {
   "Conservador (Baja Tolerancia al Riesgo)": "conservador",
   "Especulativo (Tolerancia Media al Riesgo)": "moderado",
   "Agresivo (Alta Tolerancia al Riesgo)": "agresivo",
+  Conservador: "conservador",
+  Moderado: "moderado",
+  Agresivo: "agresivo",
 };
 
 /** Las 12 categorías del export de tenencias, agregadas a los 6 buckets neutrales. */
