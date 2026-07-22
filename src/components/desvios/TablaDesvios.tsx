@@ -13,6 +13,19 @@ const STATUS_PILL: Record<StatusDesvio, string> = {
   revisar: "pill-red",
 };
 
+/** Estado del Test del Inversor, distinto del "Estado" de desvío de cartera de arriba. */
+const ESTADO_PERFIL_PILL: Record<string, string> = {
+  Vigente: "pill-green",
+  "Por vencer": "pill-amber",
+  VENCIDO: "pill-red",
+  "NO TIENE": "pill-mute",
+};
+
+function fmtDiasVencidos(dias: number | null): string {
+  if (dias === null) return "—";
+  return dias >= 0 ? `+${dias}` : String(dias);
+}
+
 type Orden = "aum" | "desvio";
 
 const SELECT_CLASS = "text-[13px] px-2 py-2.5 sm:py-2 rounded-md w-full sm:w-auto";
@@ -92,11 +105,11 @@ export function TablaDesvios({ clientes }: { clientes: ClienteEnriquecido[] }) {
         <table className="w-full" style={{ borderCollapse: "collapse" }}>
           <thead>
             <tr>
-              {["Cliente", "Oficial", "Perfil", "Composición", "AUM (USD)", "Desvío", "Estado", "", ""].map((h, i) => (
+              {["Cliente", "Oficial", "Perfil", "Composición", "AUM (USD)", "Desvío", "Estado", "Estado del perfil", "Días vencidos", "", ""].map((h, i) => (
                 <th
                   key={`${h}-${i}`}
                   className={`text-[11px] font-medium uppercase tracking-wide px-4 py-3 ${
-                    i >= 4 && i <= 5 ? "text-right" : "text-left"
+                    (i >= 4 && i <= 5) || i === 8 ? "text-right" : "text-left"
                   }`}
                   style={{ color: "var(--text-mute)", background: "#F6F7F8", borderBottom: "1px solid var(--border)" }}
                 >
@@ -141,6 +154,12 @@ export function TablaDesvios({ clientes }: { clientes: ClienteEnriquecido[] }) {
                     {STATUS_LABEL[c.statusSemaforo]}
                   </td>
                   <td className="px-4 py-3">
+                    <span className={`pill ${ESTADO_PERFIL_PILL[c.estadoPerfil] ?? "pill-mute"}`}>{c.estadoPerfil}</span>
+                  </td>
+                  <td className="px-4 py-3 text-right font-mono-brand text-[13px]" style={{ color: "var(--text-soft)" }}>
+                    {fmtDiasVencidos(c.diasVencidos)}
+                  </td>
+                  <td className="px-4 py-3">
                     <BotonFichaPdf cliente={c} />
                   </td>
                   <td className="px-4 py-3 text-right text-[12px]" style={{ color: "var(--text-mute)" }}>
@@ -149,7 +168,7 @@ export function TablaDesvios({ clientes }: { clientes: ClienteEnriquecido[] }) {
                 </tr>
                 {expandido === c.numero && (
                   <tr>
-                    <td colSpan={9} style={{ padding: 0, borderBottom: "1px solid var(--border)" }}>
+                    <td colSpan={11} style={{ padding: 0, borderBottom: "1px solid var(--border)" }}>
                       <DetalleCliente cliente={c} />
                     </td>
                   </tr>
@@ -158,7 +177,7 @@ export function TablaDesvios({ clientes }: { clientes: ClienteEnriquecido[] }) {
             ))}
             {filtrados.length === 0 && (
               <tr>
-                <td colSpan={9} className="text-center p-8 text-[13px]" style={{ color: "var(--text-mute)" }}>
+                <td colSpan={11} className="text-center p-8 text-[13px]" style={{ color: "var(--text-mute)" }}>
                   No hay cuentas que coincidan con los filtros.
                 </td>
               </tr>
@@ -199,6 +218,14 @@ export function TablaDesvios({ clientes }: { clientes: ClienteEnriquecido[] }) {
                 <span className="font-mono-brand shrink-0 ml-2">
                   USD {Math.round(c.aumUsd).toLocaleString("es-AR")}
                 </span>
+              </div>
+              <div className="flex items-center gap-2 text-[12px]" style={{ color: "var(--text-soft)" }}>
+                <span className={`pill ${ESTADO_PERFIL_PILL[c.estadoPerfil] ?? "pill-mute"}`}>{c.estadoPerfil}</span>
+                {c.diasVencidos !== null && (
+                  <span className="font-mono-brand" style={{ color: "var(--text-mute)" }}>
+                    {fmtDiasVencidos(c.diasVencidos)} días
+                  </span>
+                )}
               </div>
               <div className="text-[11px] text-center" style={{ color: "var(--text-mute)" }}>
                 {expandido === c.numero ? "▲ Ocultar detalle" : "▼ Ver detalle"}

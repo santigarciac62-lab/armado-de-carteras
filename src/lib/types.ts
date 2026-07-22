@@ -74,6 +74,13 @@ export interface ClienteRaw {
   categorias: Record<string, number>;
   aumArs: number;
   aumPromUsd: number;
+  /** Estado del Test del Inversor: "Vigente" | "Por vencer" | "VENCIDO" | "NO TIENE"
+   * (incluye las cuentas que ni figuran en la hoja "Estado de Perfiles" del Excel,
+   * tratadas igual que "NO TIENE" a pedido del asesor). */
+  estadoPerfil: string;
+  /** Días para el vencimiento del perfil, con signo: positivo = faltan X días,
+   * negativo = vencido hace X días. Null cuando no hay fecha de vencimiento cargada. */
+  diasVencidos: number | null;
 }
 
 export interface AlertaConcentracion {
