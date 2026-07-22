@@ -1,9 +1,10 @@
 import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
-import { Moneda, FlujoPago, PagoMensual } from "@/lib/types";
+import { Moneda, FlujoPago } from "@/lib/types";
 import { LineaCombinadaCalculada } from "@/lib/armadoCartera/tipos";
 import { fmtFecha, fmtNum, fmtPct } from "@/lib/formato";
 import { PDF_COLOR } from "@/lib/pdfTheme";
-import { LogoIsologoClaro, PDF_FONT } from "./pdfBrand";
+import { LogoIsologoClaro, PdfDonutChart, PdfDonutDatum, PDF_FONT } from "./pdfBrand";
+import { CobroMensualPorTicker, PdfCobrosPorMesChart } from "./pdfCobrosChart";
 
 // Tipografías y colores del Manual de Identidad Visual D.A Valores (ver pdfBrand.tsx):
 // Montserrat Bold para títulos, Lato para cuerpo. Colores de PDF_COLOR ya coinciden con
@@ -92,7 +93,12 @@ export function CarteraCombinadaPdf({
   moneda,
   justificaciones,
   flujos,
-  porMes,
+  donutClases,
+  donutSectores,
+  cobrosArs,
+  cobrosUsd,
+  tickersRentaFija,
+  colorPorTicker,
   generadoEn,
 }: {
   lineas: LineaCombinadaCalculada[];
@@ -101,7 +107,12 @@ export function CarteraCombinadaPdf({
   moneda: Moneda;
   justificaciones: Record<string, string>;
   flujos: FlujoPago[];
-  porMes: PagoMensual[];
+  donutClases: PdfDonutDatum[];
+  donutSectores: PdfDonutDatum[];
+  cobrosArs: CobroMensualPorTicker[];
+  cobrosUsd: CobroMensualPorTicker[];
+  tickersRentaFija: string[];
+  colorPorTicker: Record<string, string>;
   generadoEn: Date;
 }) {
   const pctRentaFija = lineas.filter((l) => l.clase === "rentaFija").reduce((a, l) => a + l.pct, 0);
@@ -172,6 +183,12 @@ export function CarteraCombinadaPdf({
             ))}
           </View>
 
+          <Text style={styles.sectionTitle}>Composición por clase y sector</Text>
+          <View style={{ flexDirection: "row", gap: 20, marginBottom: 18, backgroundColor: PDF_COLOR.bg, borderRadius: 5, padding: 12 }}>
+            <PdfDonutChart titulo="Clases" data={donutClases} centerLabel="Clases" centerValue={String(lineas.length)} />
+            <PdfDonutChart titulo="Sectores" data={donutSectores} centerLabel="Sectores" centerValue={String(donutSectores.length)} />
+          </View>
+
           <Text style={styles.sectionTitle}>Calendario de Renta Fija de la cartera</Text>
           {flujos.length === 0 ? (
             <Text style={{ fontFamily: PDF_FONT.body, color: PDF_COLOR.textSoft, marginBottom: 16 }}>
@@ -190,46 +207,12 @@ export function CarteraCombinadaPdf({
                 </View>
               </View>
 
-              <Text style={styles.subsectionTitle}>Total por mes</Text>
-              <View style={styles.table}>
-                <View style={styles.tHeadRow}>
-                  <Text style={[styles.tHeadCell, { width: "30%" }]}>Mes</Text>
-                  <Text style={[styles.tHeadCell, { width: "35%", textAlign: "right" }]}>ARS</Text>
-                  <Text style={[styles.tHeadCell, { width: "35%", textAlign: "right" }]}>USD</Text>
-                </View>
-                {porMes.map((m, i) => (
-                  <View key={m.mes} style={i % 2 === 1 ? [styles.tRow, styles.tRowAlt] : styles.tRow}>
-                    <Text style={[styles.tCell, { width: "30%" }]}>{m.mes}</Text>
-                    <Text style={[styles.tCell, { width: "35%", textAlign: "right" }]}>
-                      {m.porMoneda.ARS > 0 ? `$${fmtNum(m.porMoneda.ARS, 0)}` : "—"}
-                    </Text>
-                    <Text style={[styles.tCell, { width: "35%", textAlign: "right" }]}>
-                      {m.porMoneda.USD > 0 ? `USD ${fmtNum(m.porMoneda.USD, 0)}` : "—"}
-                    </Text>
-                  </View>
-                ))}
-              </View>
-
-              <Text style={styles.subsectionTitle}>Detalle de pagos</Text>
-              <View style={styles.table}>
-                <View style={styles.tHeadRow}>
-                  <Text style={[styles.tHeadCell, { width: "20%" }]}>Fecha</Text>
-                  <Text style={[styles.tHeadCell, { width: "25%" }]}>Instrumento</Text>
-                  <Text style={[styles.tHeadCell, { width: "30%" }]}>Tipo</Text>
-                  <Text style={[styles.tHeadCell, { width: "25%", textAlign: "right" }]}>Monto</Text>
-                </View>
-                {flujos.map((f, idx) => (
-                  <View key={`${f.ticker}-${f.fecha}-${idx}`} style={idx % 2 === 1 ? [styles.tRow, styles.tRowAlt] : styles.tRow}>
-                    <Text style={[styles.tCell, { width: "20%" }]}>{fmtFecha(f.fecha)}</Text>
-                    <Text style={[styles.tCell, { width: "25%" }]}>{f.ticker}</Text>
-                    <Text style={[styles.tCell, { width: "30%" }]}>{f.tipo === "cupon" ? "Cupón" : "Cupón + capital"}</Text>
-                    <Text style={[styles.tCell, { width: "25%", textAlign: "right" }]}>
-                      {f.moneda === "USD" ? "USD " : "$"}
-                      {fmtNum(f.monto, 0)}
-                    </Text>
-                  </View>
-                ))}
-              </View>
+              {cobrosArs.length > 0 && (
+                <PdfCobrosPorMesChart moneda="ARS" datos={cobrosArs} tickers={tickersRentaFija} colorPorTicker={colorPorTicker} />
+              )}
+              {cobrosUsd.length > 0 && (
+                <PdfCobrosPorMesChart moneda="USD" datos={cobrosUsd} tickers={tickersRentaFija} colorPorTicker={colorPorTicker} />
+              )}
             </>
           )}
 
