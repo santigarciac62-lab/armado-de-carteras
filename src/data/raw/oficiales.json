@@ -1,83 +1,83 @@
 {
   "resumenGlobal": {
-    "aumTotalUsd": 36149504.0,
-    "cuentasTotales": 625,
-    "conTenencia": 230,
-    "pctTenencia": "36.8%",
-    "fees2025": 415203.69172999996,
+    "aumTotalUsd": 34064429.0,
+    "cuentasTotales": 626,
+    "conTenencia": 228,
+    "pctTenencia": "36.4%",
+    "fees2025": 415144.194696,
     "feesQ1": 121408.0,
     "feesQ2": 196903.0
   },
   "porOficial": [
     {
-      "oficial": "ALI, Leila",
-      "cuentas": 59,
-      "conTenencia": 50,
-      "pctTenencia": 0.847457627118644,
-      "aumUsd": 11277540.09792308,
-      "pctAum": 0.3119694286986022,
-      "fees2025": 62371.55309300004,
-      "feesQ1Q2": 17184.03048
-    },
-    {
       "oficial": "MIGUEZ, Nicolas",
-      "cuentas": 87,
-      "conTenencia": 64,
-      "pctTenencia": 0.735632183908046,
-      "aumUsd": 10735490.01453147,
-      "pctAum": 0.2969747531422853,
-      "fees2025": 80552.869939,
-      "feesQ1Q2": 76089.21699000002
+      "cuentas": 79,
+      "conTenencia": 58,
+      "pctTenencia": 0.7341772151898734,
+      "aumUsd": 10001107.4018042,
+      "pctAum": 0.2935938688312875,
+      "fees2025": 76734.977052,
+      "feesQ1Q2": 81969.28937000001
     },
     {
       "oficial": "STELLA, FEDERICO",
-      "cuentas": 35,
-      "conTenencia": 32,
-      "pctTenencia": 0.9142857142857143,
-      "aumUsd": 9720218.987265734,
-      "pctAum": 0.2688894154179118,
+      "cuentas": 38,
+      "conTenencia": 35,
+      "pctTenencia": 0.9210526315789473,
+      "aumUsd": 9828548.648846153,
+      "pctAum": 0.2885282106150269,
       "fees2025": 39443.384759,
-      "feesQ1Q2": 31201.019648
+      "feesQ1Q2": 33466.899648
+    },
+    {
+      "oficial": "ALI, Leila",
+      "cuentas": 59,
+      "conTenencia": 48,
+      "pctTenencia": 0.8135593220338984,
+      "aumUsd": 9453539.574692307,
+      "pctAum": 0.2775193932406824,
+      "fees2025": 62371.55309300002,
+      "feesQ1Q2": 17510.95048
     },
     {
       "oficial": "GARCIA CONSIGLIERI, Santiago",
-      "cuentas": 58,
-      "conTenencia": 39,
-      "pctTenencia": 0.6724137931034483,
-      "aumUsd": 2231863.286209791,
-      "pctAum": 0.06173980391880689,
-      "fees2025": 162265.428928,
-      "feesQ1Q2": 26495.04578300001
+      "cuentas": 59,
+      "conTenencia": 40,
+      "pctTenencia": 0.6779661016949152,
+      "aumUsd": 2339940.998293706,
+      "pctAum": 0.06869162612952852,
+      "fees2025": 163365.224056,
+      "feesQ1Q2": 27020.71558300001
     },
     {
       "oficial": "DOFFO, Agustin",
-      "cuentas": 54,
-      "conTenencia": 39,
-      "pctTenencia": 0.7222222222222222,
-      "aumUsd": 2050430.013678322,
-      "pctAum": 0.05672083401162083,
-      "fees2025": 38416.361081,
-      "feesQ1Q2": 15466.936892
+      "cuentas": 57,
+      "conTenencia": 40,
+      "pctTenencia": 0.7017543859649122,
+      "aumUsd": 2301407.705286713,
+      "pctAum": 0.06756043754028372,
+      "fees2025": 41074.961806,
+      "feesQ1Q2": 16651.036391999998
     },
     {
       "oficial": "FST, FST",
-      "cuentas": 327,
+      "cuentas": 328,
       "conTenencia": 2,
-      "pctTenencia": 0.006116207951070336,
-      "aumUsd": 95706.62964335663,
-      "pctAum": 0.00264752262579012,
+      "pctTenencia": 0.006097560975609756,
+      "aumUsd": 92149.371013986,
+      "pctAum": 0.00270514946589667,
       "fees2025": 32154.09393,
-      "feesQ1Q2": 861.3257060000001
+      "feesQ1Q2": 866.2257060000001
     },
     {
       "oficial": "MION, EVELYN",
-      "cuentas": 5,
-      "conTenencia": 4,
-      "pctTenencia": 0.8,
-      "aumUsd": 38254.93005594406,
-      "pctAum": 0.001058242184982853,
+      "cuentas": 6,
+      "conTenencia": 5,
+      "pctTenencia": 0.8333333333333334,
+      "aumUsd": 47734.96683216783,
+      "pctAum": 0.001401314177294116,
       "fees2025": 0,
-      "feesQ1Q2": 190.90041300000001
+      "feesQ1Q2": 286.490413
     }
   ],
   "revenueQ1Q2": [
@@ -85,49 +85,49 @@
       "oficial": "MIGUEZ, Nicolas",
       "q1Usd": 22207.26376000001,
       "q2Usd": 51332.63323000001,
-      "totalUsd": 76089.21699000002,
+      "totalUsd": 81969.28937000001,
       "varQ2VsQ1": 1.311524453654708
     },
     {
       "oficial": "STELLA, FEDERICO",
       "q1Usd": 10798.125532,
       "q2Usd": 17474.694116,
-      "totalUsd": 31201.019647999998,
+      "totalUsd": 33466.899648,
       "varQ2VsQ1": 0.6183081095153175
     },
     {
       "oficial": "GARCIA CONSIGLIERI, Santiago",
       "q1Usd": 8363.409825000002,
       "q2Usd": 17809.487083,
-      "totalUsd": 26495.045783,
+      "totalUsd": 27020.715583,
       "varQ2VsQ1": 1.129452873367951
     },
     {
       "oficial": "ALI, Leila",
       "q1Usd": 8867.968949999999,
       "q2Usd": 7475.081529999998,
-      "totalUsd": 17184.030479999998,
+      "totalUsd": 17510.950479999996,
       "varQ2VsQ1": -0.1570694967307031
     },
     {
       "oficial": "DOFFO, Agustin",
       "q1Usd": 9799.897501999998,
       "q2Usd": 5320.508140000001,
-      "totalUsd": 15466.936891999998,
+      "totalUsd": 16651.036391999998,
       "varQ2VsQ1": -0.457085327788972
     },
     {
       "oficial": "FST, FST",
       "q1Usd": 833.9808820000001,
       "q2Usd": 6.550774000000008,
-      "totalUsd": 861.3257060000001,
+      "totalUsd": 866.2257060000001,
       "varQ2VsQ1": -0.9921451748578571
     },
     {
       "oficial": "MION, EVELYN",
       "q1Usd": 0,
       "q2Usd": 114.280413,
-      "totalUsd": 190.90041300000001,
+      "totalUsd": 286.490413,
       "varQ2VsQ1": 0
     }
   ]

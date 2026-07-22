@@ -151,7 +151,7 @@ export interface ComposicionBucket {
 }
 
 /** Composición actual vs. cartera modelo del cliente, bucket por bucket — misma cuenta que
- * usa la UI de "Cuentas con desvío" (pantalla y ficha PDF comparten esta única función). */
+ * usa la UI de "Seguimiento de Carteras" (pantalla y ficha PDF comparten esta única función). */
 export function composicionPorBucket(cliente: ClienteEnriquecido): ComposicionBucket[] {
   const modelo = getCarteraModelo(cliente.perfilGrupo, cliente.monedaComparacion)!;
   return BUCKETS.map((b) => {

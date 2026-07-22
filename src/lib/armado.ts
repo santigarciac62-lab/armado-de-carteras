@@ -49,7 +49,7 @@ export function lineasDesdeModelo(cartera: CarteraModelo): LineaCartera[] {
 }
 
 /** Desvío total (0-1) de la cartera en armado contra el perfil de partida elegido,
- * agregado por bucket — mismo criterio y semáforo que "Cuentas con desvío", para que
+ * agregado por bucket — mismo criterio y semáforo que "Seguimiento de Carteras", para que
  * el asesor vea de entrada si lo que está armando se sigue pareciendo al perfil del
  * cliente o ya se corrió hacia otro (ej. armar una agresiva partiendo de conservador). */
 export function desvioTotal(lineas: LineaCalculada[], modelo: CarteraModelo): number {

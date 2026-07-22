@@ -16,7 +16,7 @@ function nombreArchivo(generadoEn: Date) {
 
 /** Botón de descarga del informe PDF de la cartera combinada. Carga @react-pdf/renderer
  * de forma diferida (solo al hacer click), mismo patrón que BotonFichaPdf.tsx en
- * Cuentas con desvío, para no sumar peso al bundle de esta pantalla. */
+ * Seguimiento de Carteras, para no sumar peso al bundle de esta pantalla. */
 export function BotonDescargarInformePdf({
   lineas,
   totalPct,

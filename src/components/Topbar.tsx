@@ -9,7 +9,7 @@ const NAV_ITEMS = [
   { href: "/armado-cartera", label: "Armado de Cartera", disabled: false },
   { href: "/renta-fija", label: "Renta Fija", disabled: false },
   { href: "/renta-variable", label: "Renta Variable", disabled: false },
-  { href: "/desvios", label: "Cuentas con desvío", disabled: false },
+  { href: "/desvios", label: "Seguimiento de Carteras", disabled: false },
   { href: "/oficiales", label: "Seguimiento de oficiales", disabled: false },
   { href: "/dashboard-macro", label: "Dashboard Financiero", disabled: false },
   { href: "/noticias", label: "Noticias", disabled: false },

@@ -16,7 +16,7 @@ export default function Desvios() {
           className="font-serif-brand font-medium text-[24px] sm:text-[32px] leading-tight mb-2.5 tracking-tight"
           style={{ color: "var(--navy)" }}
         >
-          Cuentas con desvío
+          Seguimiento de Carteras
         </h1>
         <p className="text-[14px] sm:text-[15px] max-w-[760px]" style={{ color: "var(--text-soft)" }}>
           Comparación de la cartera real de cada cliente contra la cartera modelo de su perfil de riesgo,

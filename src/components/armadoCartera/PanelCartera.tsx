@@ -173,7 +173,7 @@ export function PanelCartera({
           </div>
 
           {/* Mobile: tarjetas apiladas, sin scroll horizontal — mismo patrón que
-              TablaDesvios.tsx en Cuentas con desvío. */}
+              TablaDesvios.tsx en Seguimiento de Carteras. */}
           <div className="md:hidden">
             {lineas.map((l) => (
               <div key={l.ticker} className="px-4 py-3" style={{ borderBottom: "1px solid #EEF0F2" }}>
