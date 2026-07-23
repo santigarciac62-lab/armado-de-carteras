@@ -6,7 +6,7 @@ import { LineaCombinadaCalculada } from "@/lib/armadoCartera/tipos";
 import { lineasRentaFijaComoNominal } from "@/lib/armadoCartera/calculos";
 import { consolidarCalendario } from "@/lib/rentaFija";
 import { segmentosComposicion } from "@/lib/armadoCartera/coloresSector";
-import { colorPorIndice, PdfDonutDatum } from "./pdfBrand";
+import { colorPorIndice, PdfDonutDatum } from "@/components/pdf/pdfBrand";
 import { CobroMensualPorTicker } from "./pdfCobrosChart";
 import { PDF_COLOR } from "@/lib/pdfTheme";
 

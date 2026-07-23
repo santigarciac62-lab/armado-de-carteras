@@ -3,7 +3,7 @@ import { Moneda, FlujoPago } from "@/lib/types";
 import { LineaCombinadaCalculada } from "@/lib/armadoCartera/tipos";
 import { fmtFecha, fmtNum, fmtPct } from "@/lib/formato";
 import { PDF_COLOR } from "@/lib/pdfTheme";
-import { LogoIsologoClaro, PdfDonutChart, PdfDonutDatum, PDF_FONT } from "./pdfBrand";
+import { LogoIsologoClaro, PdfDonutChart, PdfDonutDatum, PDF_FONT } from "@/components/pdf/pdfBrand";
 import { CobroMensualPorTicker, PdfCobrosPorMesChart } from "./pdfCobrosChart";
 
 // Tipografías y colores del Manual de Identidad Visual D.A Valores (ver pdfBrand.tsx):
