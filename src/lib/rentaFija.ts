@@ -49,8 +49,26 @@ function addMonths(date: Date, months: number): Date {
   return d;
 }
 
+function addDays(date: Date, days: number): Date {
+  const d = new Date(date.getTime());
+  d.setUTCDate(d.getUTCDate() + days);
+  return d;
+}
+
 function toIsoDate(d: Date): string {
   return d.toISOString().slice(0, 10);
+}
+
+/**
+ * Fecha de vencimiento efectiva de un instrumento: la cargada en el dataset o, si no vino
+ * (caso Lecap/Boncap, que en el seed traen `diasAVencimientoSeed` en vez de una fecha), la
+ * que resulta de sumarle esos días a la fecha semilla `FECHA_SEED_RENTA_FIJA`.
+ */
+function vencimientoEfectivo(instrumento: InstrumentoRentaFija): string | null {
+  if (instrumento.vencimiento) return instrumento.vencimiento;
+  if (instrumento.diasAVencimientoSeed === null) return null;
+  const fechaSeed = new Date(FECHA_SEED_RENTA_FIJA + "T00:00:00Z");
+  return toIsoDate(addDays(fechaSeed, instrumento.diasAVencimientoSeed));
 }
 
 /** Flujo de fondos proyectado para un nominal dado de un instrumento, desde una fecha en adelante. */
@@ -59,9 +77,10 @@ export function generarFlujoPagos(
   nominal: number,
   desde: string = FECHA_SEED_RENTA_FIJA
 ): FlujoPago[] {
-  if (!instrumento.vencimiento || nominal <= 0) return [];
+  const fechaVencimiento = vencimientoEfectivo(instrumento);
+  if (!fechaVencimiento || nominal <= 0) return [];
   const fechaDesde = new Date(desde + "T00:00:00Z");
-  const vencimiento = new Date(instrumento.vencimiento + "T00:00:00Z");
+  const vencimiento = new Date(fechaVencimiento + "T00:00:00Z");
   if (vencimiento <= fechaDesde) return [];
 
   const frecuencia = FRECUENCIA_MESES[instrumento.subcategoria] ?? null;
@@ -70,7 +89,7 @@ export function generarFlujoPagos(
   if (frecuencia === null || tasaAnual === null) {
     return [
       {
-        fecha: instrumento.vencimiento,
+        fecha: fechaVencimiento,
         ticker: instrumento.ticker,
         moneda: instrumento.moneda,
         tipo: "amortizacion",
