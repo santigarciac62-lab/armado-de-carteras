@@ -87,13 +87,18 @@ export function generarFlujoPagos(
   const tasaAnual = tasaCupon(instrumento);
 
   if (frecuencia === null || tasaAnual === null) {
+    const diasHastaVencimiento = (vencimiento.getTime() - fechaDesde.getTime()) / 86_400_000;
+    const monto =
+      frecuencia === null && tasaAnual !== null
+        ? nominal * (1 + (tasaAnual * diasHastaVencimiento) / 365)
+        : nominal;
     return [
       {
         fecha: fechaVencimiento,
         ticker: instrumento.ticker,
         moneda: instrumento.moneda,
         tipo: "amortizacion",
-        monto: nominal,
+        monto,
       },
     ];
   }
