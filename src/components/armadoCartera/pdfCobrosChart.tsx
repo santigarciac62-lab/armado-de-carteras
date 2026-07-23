@@ -2,7 +2,7 @@ import { Line, Rect, Svg, Text, View } from "@react-pdf/renderer";
 import { Moneda } from "@/lib/types";
 import { fmtNum } from "@/lib/formato";
 import { PDF_COLOR } from "@/lib/pdfTheme";
-import { PDF_FONT } from "./pdfBrand";
+import { PDF_FONT } from "@/components/pdf/pdfBrand";
 
 export interface CobroMensualPorTicker {
   mes: string; // "yyyy-mm"
