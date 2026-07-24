@@ -17,6 +17,7 @@ import { TC_REFERENCIA } from "@/lib/constants";
 import { CatalogoInstrumentos } from "./CatalogoInstrumentos";
 import { CarteraEnArmado } from "./CarteraEnArmado";
 import { ComparacionModelo } from "./ComparacionModelo";
+import { ResumenCarteraModelo } from "./ResumenCarteraModelo";
 import { CategoriaDonut } from "@/components/CategoriaDonut";
 
 const PERFILES: { id: Perfil; label: string }[] = [
@@ -237,6 +238,8 @@ export function ArmadoWorkspace({
           </div>
         </div>
       </div>
+
+      {carteraCargada && <ResumenCarteraModelo modelo={carteraCargada} />}
 
       {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 mb-6">
