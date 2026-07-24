@@ -50,6 +50,22 @@ const styles = StyleSheet.create({
     borderLeft: `3px solid ${PDF_COLOR.teal}`,
   },
 
+  resumenCard: { backgroundColor: PDF_COLOR.bg, borderRadius: 5, padding: 12, marginBottom: 20 },
+  badgeRow: { flexDirection: "row", flexWrap: "wrap", gap: 6, marginBottom: 8 },
+  badge: {
+    fontFamily: PDF_FONT.body,
+    fontSize: 6.5,
+    fontWeight: 700,
+    textTransform: "uppercase",
+    letterSpacing: 0.3,
+    color: PDF_COLOR.textMute,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 3,
+    paddingHorizontal: 5,
+    paddingVertical: 3,
+  },
+  estrategia: { fontFamily: PDF_FONT.body, fontSize: 8.5, color: PDF_COLOR.textSoft, lineHeight: 1.45 },
+
   donutCard: { flexDirection: "row", marginBottom: 20, backgroundColor: PDF_COLOR.bg, borderRadius: 5, padding: 12 },
 
   table: { marginBottom: 14, borderRadius: 4, overflow: "hidden" },
@@ -150,6 +166,22 @@ export function CarteraArmadaPdf({
               <Text style={styles.kpiSub}>{lineas.length} instrumentos seleccionados</Text>
             </View>
           </View>
+
+          {carteraModelo && (
+            <>
+              <Text style={styles.sectionTitle}>
+                Por qué recomendamos la Cartera {carteraModelo.perfilLabel} {carteraModelo.moneda}
+              </Text>
+              <View style={styles.resumenCard}>
+                <View style={styles.badgeRow}>
+                  <Text style={styles.badge}>Riesgo: {carteraModelo.riesgo}</Text>
+                  <Text style={styles.badge}>Liquidez: {carteraModelo.liquidez}</Text>
+                  <Text style={styles.badge}>Horizonte: {carteraModelo.horizonte}</Text>
+                </View>
+                <Text style={styles.estrategia}>{carteraModelo.estrategia}</Text>
+              </View>
+            </>
+          )}
 
           <Text style={styles.sectionTitle}>Composición por categoría</Text>
           <View style={styles.donutCard}>
