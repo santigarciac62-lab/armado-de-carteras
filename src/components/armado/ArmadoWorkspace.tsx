@@ -18,6 +18,7 @@ import { CatalogoInstrumentos } from "./CatalogoInstrumentos";
 import { CarteraEnArmado } from "./CarteraEnArmado";
 import { ComparacionModelo } from "./ComparacionModelo";
 import { ResumenCarteraModelo } from "./ResumenCarteraModelo";
+import { BotonDescargarCarteraArmadaPdf } from "./BotonDescargarCarteraArmadaPdf";
 import { CategoriaDonut } from "@/components/CategoriaDonut";
 
 const PERFILES: { id: Perfil; label: string }[] = [
@@ -308,6 +309,17 @@ export function ArmadoWorkspace({
             onQuitar={quitarInstrumento}
             onNormalizar={normalizar}
           />
+
+          <div className="flex sm:justify-end">
+            <BotonDescargarCarteraArmadaPdf
+              perfil={perfil}
+              moneda={monedaCartera}
+              montoTotal={montoEnCartera}
+              totalPct={totalPct}
+              lineas={lineasCalculadas}
+              carteraModelo={carteraCargada}
+            />
+          </div>
 
           <div className={`grid grid-cols-1 gap-6 ${carteraCargada ? "md:grid-cols-2" : ""}`}>
             <div
