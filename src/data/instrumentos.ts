@@ -7,6 +7,7 @@ const CATEGORIA_A_BUCKET: Record<string, Bucket> = {
   "FCI Latam": "FCI",
   "Tasa Fija ARS": "Soberanos",
   "Bonos HD": "Soberanos",
+  CER: "Soberanos",
   "ON HD": "ON",
   Acciones: "Acciones",
   Cedears: "Cedears",
@@ -18,8 +19,9 @@ const METADATA: Record<
   { nombre: string; moneda: Moneda; claseActivo: Instrumento["claseActivo"] }
 > = {
   "IAM Ahorro Pesos B": { nombre: "FCI Money Market en pesos", moneda: "ARS", claseActivo: "FCI" },
-  S30S6: { nombre: "Bono tasa fija en pesos, tramo corto", moneda: "ARS", claseActivo: "LetraTasaFija" },
+  S13N6: { nombre: "Letra tasa fija en pesos, tramo medio", moneda: "ARS", claseActivo: "LetraTasaFija" },
   T30A7: { nombre: "Bono tasa fija en pesos, tramo medio", moneda: "ARS", claseActivo: "LetraTasaFija" },
+  TX26: { nombre: "Bono ajustado por CER (TX26)", moneda: "ARS", claseActivo: "Bono" },
   "Allaria Dólar Ahorro B": {
     nombre: "FCI Money Market en dólares",
     moneda: "USD",
@@ -30,17 +32,21 @@ const METADATA: Record<
     moneda: "USD",
     claseActivo: "FCI",
   },
+  "SBS Renta Dólar Latam": {
+    nombre: "FCI renta dólar Latam",
+    moneda: "USD",
+    claseActivo: "FCI",
+  },
   VSCXO: { nombre: "ON VSCXO", moneda: "USD", claseActivo: "ON" },
   TTC9O: { nombre: "ON TTC9O", moneda: "USD", claseActivo: "ON" },
   YM42O: { nombre: "ON YM42O", moneda: "USD", claseActivo: "ON" },
-  GD35: { nombre: "Bonar 2035 (GD35)", moneda: "USD", claseActivo: "Bono" },
-  GGAL: { nombre: "Grupo Galicia (GGAL)", moneda: "ARS", claseActivo: "Accion" },
-  PAMP: { nombre: "Pampa Energía (PAMP)", moneda: "ARS", claseActivo: "Accion" },
+  AO29: { nombre: "Bono hard dollar (AO29)", moneda: "USD", claseActivo: "Bono" },
   META: { nombre: "Meta Platforms (Cedear)", moneda: "ARS", claseActivo: "Cedear" },
-  MELI: { nombre: "Mercado Libre (Cedear)", moneda: "ARS", claseActivo: "Cedear" },
   NU: { nombre: "Nu Holdings (Cedear)", moneda: "ARS", claseActivo: "Cedear" },
   PEP: { nombre: "PepsiCo (Cedear)", moneda: "ARS", claseActivo: "Cedear" },
   MSFT: { nombre: "Microsoft (Cedear)", moneda: "ARS", claseActivo: "Cedear" },
+  EWZ: { nombre: "iShares MSCI Brazil ETF (Cedear)", moneda: "ARS", claseActivo: "Cedear" },
+  MU: { nombre: "Micron Technology (Cedear)", moneda: "ARS", claseActivo: "Cedear" },
 };
 
 function construirUniverso(): Instrumento[] {
